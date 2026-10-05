@@ -1,11 +1,11 @@
 # Knobs inside the weights: single-block scaling in Krea-2 — results
 
-> **Where this comes from.** This repository holds the final results of the project. The exploratory notebook, the pre-registrations, the analysis scripts and every other experiment live in [the main repository](https://github.com/aledelpho/diffusion-models-weight-steering-report); every link to it is pinned to commit [`4f89b64`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37), so what you read here is what was there when these pages were published. The data files the pages cite are copied in `data/`.
+> **Where this comes from.** This repository holds the final results of the project. The exploratory notebook, the pre-registrations, the analysis scripts and every other experiment live in [the main repository](https://github.com/aledelpho/diffusion-models-weight-steering-report); every link to it is pinned to commit [`97134a2`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/97134a26a0700d864903e87cc3d81386318c244f), so what you read here is what was there when these pages were published. The data files the pages cite are copied in `data/`.
 
 > **Scope.** Everything here is about one model, Krea-2 (28 single-stream transformer blocks),
 > edited without training by multiplying the weights of single blocks. It is an investigation
 > into whether controllable "knobs" exist inside the weights, not a tool that competes with
-> post-production. The exploratory lab notebook that led here is in [`notebook/`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook)
+> post-production. The exploratory lab notebook that led here is in [`notebook/`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/97134a26a0700d864903e87cc3d81386318c244f/notebook)
 > and stays the record of every test run; this repository holds only the results that were
 > confirmed, or that the report needs in order to be honest about what was not.
 
@@ -46,8 +46,8 @@ vector of such numbers. Nothing is trained, nothing runs at inference beyond the
 and any preset can be written down in one line.
 
 The project started with hand-calibrated presets over the whole stack
-([notebook page 01](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/01-mark-style.md)) and an exploratory notebook of tests on
-permutations, rotations and block groups ([notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook)). Single blocks turned out to be
+([notebook page 01](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/97134a26a0700d864903e87cc3d81386318c244f/notebook/01-mark-style.md)) and an exploratory notebook of tests on
+permutations, rotations and block groups ([notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/97134a26a0700d864903e87cc3d81386318c244f/notebook)). Single blocks turned out to be
 the more useful unit: they are finer than the tuner's macro-blocks, and some of them behave the
 same way on every prompt tried. The pages below report what survived confirmation:
 
@@ -159,4 +159,4 @@ page shows its pre-registration, its data and its reservations.
 | [27 · Appendix A: other kinds of edit](27-other-edits.md) | What did block reordering and permutation show? |
 
 Structure, sources and the list of notebook pages that enter the report:
-[`docs/report_outline.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/report_outline.md).
+[`docs/report_outline.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/97134a26a0700d864903e87cc3d81386318c244f/docs/report_outline.md).

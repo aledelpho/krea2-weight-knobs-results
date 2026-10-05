@@ -186,4 +186,4 @@ into the model's internal signal; and whether any of this carries over to anothe
 is one model, one observer, and samples of 16 to 40 cases per test.
 
 Other kinds of edit — reordering whole blocks, for instance — are in [appendix A](27-other-edits.md),
-and every experiment that led here is in the [exploratory notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook).
+and every experiment that led here is in the [exploratory notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/97134a26a0700d864903e87cc3d81386318c244f/notebook).
