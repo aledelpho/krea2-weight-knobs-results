@@ -135,7 +135,7 @@ CLIP-IQA by at most 0.02 (`data/standard_metrics_summary.csv`).
 ### The controls
 
 Every image of the 26 conditions that already existed on older benches at the original seed
-was re-rendered and came out pixel-identical ([`docs/RENDERS_2026-10-04_blk23_colorful.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/73bbfd1ca3be284fa1494cf760863e988a1fb936/docs/RENDERS_2026-10-04_blk23_colorful.md)).
+was re-rendered and came out pixel-identical ([`docs/RENDERS_2026-10-04_blk23_colorful.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/RENDERS_2026-10-04_blk23_colorful.md)).
 
 ### Reproducing this
 
@@ -196,11 +196,11 @@ analysis:
 ## Provenance
 
 * **Renders.** benchmark_blk23_colorful (128).
-* **Pre-registration:** [`docs/prereg_blk23_vs_colorful.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/73bbfd1ca3be284fa1494cf760863e988a1fb936/docs/prereg_blk23_vs_colorful.md), with amendment 1 (eye page also for the
+* **Pre-registration:** [`docs/prereg_blk23_vs_colorful.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/prereg_blk23_vs_colorful.md), with amendment 1 (eye page also for the
   desaturating side). Committed with its scoring code in 76e8180, before any render.
-* **Result documents:** [`docs/blk23_vs_colorful_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/73bbfd1ca3be284fa1494cf760863e988a1fb936/docs/blk23_vs_colorful_result.md), [`docs/standard_metrics_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/73bbfd1ca3be284fa1494cf760863e988a1fb936/docs/standard_metrics_result.md).
+* **Result documents:** [`docs/blk23_vs_colorful_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/blk23_vs_colorful_result.md), [`docs/standard_metrics_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/standard_metrics_result.md).
 * **Data:** `data/blk23_colorful_measures.csv`, `data/blk23_colorful_test.csv`,
   `data/blk23_matched_chroma.csv`, `data/blk23_colorful_eye_alessandro.csv`,
   `data/blk23_saturation_all.csv`, `data/standard_metrics_c47.csv`.
 * **Exploratory history:** the knob was first noticed on the single-block benches
-  ([`docs/single_blocks_exploration_synthesis.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/73bbfd1ca3be284fa1494cf760863e988a1fb936/docs/single_blocks_exploration_synthesis.md) §5).
+  ([`docs/single_blocks_exploration_synthesis.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/single_blocks_exploration_synthesis.md) §5).

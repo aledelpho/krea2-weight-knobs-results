@@ -181,7 +181,7 @@ without removing the look is untested.
 
 ### Against an earlier overturned result
 
-[Notebook page 09](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/73bbfd1ca3be284fa1494cf760863e988a1fb936/notebook/09-style-direction.md) tested, with criteria frozen in advance,
+[Notebook page 09](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/09-style-direction.md) tested, with criteria frozen in advance,
 whether the direction a weight edit imprints depends on the declared style more than on the
 subject, and it was overturned: at the usable dose 6 of 12 cells carried the opposite sign. This
 page finds that, for single late blocks, the change is more alike within a style than across
@@ -261,8 +261,8 @@ analysis:
 ## Provenance
 
 * **Renders.** benchmark_prompt_family (433).
-* **Pre-registration:** [`docs/prereg_prompt_family.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/73bbfd1ca3be284fa1494cf760863e988a1fb936/docs/prereg_prompt_family.md), with amendment 1 (four Style-band arms and
+* **Pre-registration:** [`docs/prereg_prompt_family.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/prereg_prompt_family.md), with amendment 1 (four Style-band arms and
   H4), both before any render.
-* **Result documents:** [`docs/prompt_family_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/73bbfd1ca3be284fa1494cf760863e988a1fb936/docs/prompt_family_result.md), [`docs/standard_metrics_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/73bbfd1ca3be284fa1494cf760863e988a1fb936/docs/standard_metrics_result.md).
+* **Result documents:** [`docs/prompt_family_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/prompt_family_result.md), [`docs/standard_metrics_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/standard_metrics_result.md).
 * **Eye pass:** `data/prompt_family_eye_alessandro.csv`, deposited before the scoring ran.
-* **Exploratory basis:** [`docs/style_vs_subject_exploration.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/73bbfd1ca3be284fa1494cf760863e988a1fb936/docs/style_vs_subject_exploration.md).
+* **Exploratory basis:** [`docs/style_vs_subject_exploration.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/style_vs_subject_exploration.md).
