@@ -96,7 +96,7 @@ In a comic-style corpus, block derangement pushed positive crossed the hatching 
 negative ran them parallel. A pre-registered test on 16 new prompts confirmed the sign: crosshatch
 entropy +0.288, 16 of 16 prompts, 79 of 80 pairs. The same test overturned the third family of the
 prediction — the sign scramble's exploratory effect did not come back (5 of 16 prompts). Full page:
-[notebook page 06](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/06-the-hatching-axis.md).
+[notebook page 06](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/06-the-hatching-axis.md).
 
 ### The subject grows
 
@@ -104,7 +104,7 @@ Pre-registered on ten styles that did not exist when the prediction was frozen: 
 derangement at double dose the subject's area grows by a geometric mean of 1.234, in 9 of 10
 styles, with all three predicted signs correct. The same round measured the blinding of the eye
 pass and found it failed ([page 20](20-method.md#why-the-eye-pass-is-declared-open)). Full page:
-[notebook page 03](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/03-what-ends-up-in-the-picture.md).
+[notebook page 03](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/03-what-ends-up-in-the-picture.md).
 
 ### A curiosity: attributes that appear
 
@@ -124,7 +124,7 @@ pass and found it failed ([page 20](20-method.md#why-the-eye-pass-is-declared-op
 
 What makes it worth keeping is the control: the same distance in weight space, without structure,
 does nothing. How the weights move mattered, not how far. Full page:
-[notebook page 02](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/02-attribute-emergence.md).
+[notebook page 02](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/02-attribute-emergence.md).
 
 ### Reproducing this
 
@@ -154,8 +154,8 @@ analysis:
 ## Provenance
 
 * **Renders.** notebook page 02 (920), notebook page 03 (250), notebook page 06 (560).
-* **Pre-registrations:** [`docs/prereg_hatching_axis_stage7.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/prereg_hatching_axis_stage7.md) (page 06),
-  [`docs/prereg_stage12_ingrandimento.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/prereg_stage12_ingrandimento.md) (page 03); [`docs/prereg_attribute_emergence_stage7.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/prereg_attribute_emergence_stage7.md)
+* **Pre-registrations:** [`docs/prereg_hatching_axis_stage7.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/prereg_hatching_axis_stage7.md) (page 06),
+  [`docs/prereg_stage12_ingrandimento.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/prereg_stage12_ingrandimento.md) (page 03); [`docs/prereg_attribute_emergence_stage7.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/prereg_attribute_emergence_stage7.md)
   (page 02, the generality test that was never run).
-* **Pages:** [02](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/02-attribute-emergence.md),
-  [03](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/03-what-ends-up-in-the-picture.md), [06](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/06-the-hatching-axis.md).
+* **Pages:** [02](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/02-attribute-emergence.md),
+  [03](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/03-what-ends-up-in-the-picture.md), [06](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/06-the-hatching-axis.md).

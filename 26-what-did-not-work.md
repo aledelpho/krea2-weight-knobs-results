@@ -114,10 +114,10 @@ observer who knows the conditions, the largest limit of the report.
 | `Block_4` | 3.28 | 1.204 | no subject; crumpled-paper texture of dense black strokes |
 | `Block_1` | 3.84 | 1.058 | no subject; colour confetti |
 
-Arm means over prompts and seeds ([`docs/centre_push_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/centre_push_result.md) §4); the figure shows the unit
+Arm means over prompts and seeds ([`docs/centre_push_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/centre_push_result.md) §4); the figure shows the unit
 means of one prompt (`data/centre_push_units.csv`). At 0.350, `Block_4` + already flattens faces
 into masks; `Block_1` + at 0.350 on this prompt and seed keeps the blacksmith intact, framed
-closer. The retraction is in [`docs/centre_push_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/centre_push_result.md) §4, where the original table is kept and
+closer. The retraction is in [`docs/centre_push_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/centre_push_result.md) §4, where the original table is kept and
 struck through.
 
 ### A measure with the sign wrong
@@ -144,7 +144,7 @@ macro-blocks were the wrong unit: they cut across the groups that push together.
 An analysis written by another assistant, never published, ranked 56 single-block arms by the
 difference between how consistent an arm's CLIP-embedding change is across ten images of one
 prompt and across 26 images of different prompts, and read a large difference as a "semantic
-router". The audit ([`docs/semantic_routing_audit.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/semantic_routing_audit.md)) found:
+router". The audit ([`docs/semantic_routing_audit.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/semantic_routing_audit.md)) found:
 
 * no script in the repository computes the p-values it quotes, and its survivor count is 12 in
   the text and 16 in the summary;
@@ -160,14 +160,14 @@ stable across 26 different scenes are grain, blur and texture.
 
 ### What the numbers could not see
 
-[Notebook page 11](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/11-what-the-numbers-could-not-see.md) records three more cases.
+[Notebook page 11](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/11-what-the-numbers-could-not-see.md) records three more cases.
 Five conditions recommended from displacement statistics ranked 75th to 80th of 80 on structure
 coherence; the condition picked by eye ranked 12th. An edit removed all colour from a leaf while
 leaving the leaf intact, in 9 of 20 fresh seeds and 0 of 20 controls, and never when the prompt
 named a colour — an open lead on which colours an edit can reach. A generality test for that
 effect was run on subjects whose colour was never in doubt, so its null meant nothing.
 
-The style-direction result of [notebook page 09](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/09-style-direction.md) is also
+The style-direction result of [notebook page 09](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/09-style-direction.md) is also
 overturned; it is discussed beside the result it seems to contradict, on
 [page 23](23-prompt-family-presets.md#against-an-earlier-overturned-result).
 
@@ -232,10 +232,10 @@ analysis:
 ## Provenance
 
 * **Renders.** benchmark_centre_push (295).
-* **Pre-registrations:** [`docs/prereg_centre_push.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/prereg_centre_push.md), [`docs/prereg_centre_push_model_eye.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/prereg_centre_push_model_eye.md).
-* **Result documents and retractions:** [`docs/centre_push_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/centre_push_result.md) §4,
-  [`docs/centre_push_eye_veto_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/centre_push_eye_veto_result.md), [`docs/semantic_routing_audit.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/semantic_routing_audit.md).
-* **Pitfalls:** [`docs/errors_log.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/errors_log.md), [`docs/_pitfalls_88_da_inserire.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/_pitfalls_88_da_inserire.md),
-  [`docs/_pitfalls_89_da_inserire.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/_pitfalls_89_da_inserire.md), [`docs/_pitfalls_90_da_inserire.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/_pitfalls_90_da_inserire.md).
-* **Related notebook pages:** [09](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/09-style-direction.md),
-  [11](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/11-what-the-numbers-could-not-see.md).
+* **Pre-registrations:** [`docs/prereg_centre_push.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/prereg_centre_push.md), [`docs/prereg_centre_push_model_eye.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/prereg_centre_push_model_eye.md).
+* **Result documents and retractions:** [`docs/centre_push_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/centre_push_result.md) §4,
+  [`docs/centre_push_eye_veto_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/centre_push_eye_veto_result.md), [`docs/semantic_routing_audit.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/semantic_routing_audit.md).
+* **Pitfalls:** [`docs/errors_log.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/errors_log.md), [`docs/_pitfalls_88_da_inserire.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/_pitfalls_88_da_inserire.md),
+  [`docs/_pitfalls_89_da_inserire.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/_pitfalls_89_da_inserire.md), [`docs/_pitfalls_90_da_inserire.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/_pitfalls_90_da_inserire.md).
+* **Related notebook pages:** [09](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/09-style-direction.md),
+  [11](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/11-what-the-numbers-could-not-see.md).

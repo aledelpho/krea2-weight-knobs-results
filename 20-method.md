@@ -62,6 +62,11 @@ reaches those eight. An edit in this report is one number per block: the block's
 are multiplied by 1 + d, where d is the signed dose. Nothing is trained, nothing is added at
 inference, and a preset is just a vector of such numbers.
 
+![One picture, one block changed at a time: blk23 -0.30 makes it more saturated, blk09 +0.45 more three-dimensional and changes the scene, blk27 -0.25 softer and flatter.](assets/20-method/F20.2_three_knobs.webp)
+
+Three blocks, three different kinds of change: colour, what is depicted, softness. The rest of
+this report asks how far such a change can be trusted to be the same on another picture.
+
 ![A single-block edit multiplies the eight reachable 2-D tensors of one of the 28 blocks by the same factor 1 + d; the 1-D tensors stay untouched, and a preset is a vector of 34 such factors.](assets/20-method/F20.1_edit_schema.webp)
 
 The same sampling is used throughout: euler_ancestral, simple scheduler, 9 steps, CFG 1.0,
@@ -96,9 +101,9 @@ reported as made by one observer who knew the conditions.
 The tuner node (`ArthemyKrea2ModelTuner`, Real Value mode, preceded by `ArthemyKrea2ResetPatcher`)
 takes a 34-slot vector; slot *k* is the dose of block *k* for k = 0 … 27. Only the 2-D tensors
 are scaled: the 1-D norm scales are never reached, so they cannot carry an effect
-([`docs/normscales_never_applied.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/normscales_never_applied.md)). Doses are small — between 0.075 and 0.45 in this report —
+([`docs/normscales_never_applied.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/normscales_never_applied.md)). Doses are small — between 0.075 and 0.45 in this report —
 and differ by block, because a block near the output breaks at a dose a middle block barely
-feels ([`docs/RENDERS_2026-09-30_single_blocks_styles.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/RENDERS_2026-09-30_single_blocks_styles.md)).
+feels ([`docs/RENDERS_2026-09-30_single_blocks_styles.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/RENDERS_2026-09-30_single_blocks_styles.md)).
 
 ### The same render twice
 
@@ -125,7 +130,7 @@ all the images are published so that anyone can repeat it.
 ### The measures
 
 * **Style features** — 23 statistics of texture, edges and colour per image
-  ([`experiments/style_features.py`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/experiments/style_features.py)); an arm's effect is its vector of changes from the
+  ([`experiments/style_features.py`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/experiments/style_features.py)); an arm's effect is its vector of changes from the
   baseline.
 * **Colour and layout** — CIELAB at 64×80: mean chroma change, and layout r, the correlation of
   the lightness channel with the baseline.
@@ -180,9 +185,9 @@ analysis:
 ## Provenance
 
 * **Renders.** benchmark_prompt_writing (1), benchmark_blk23_colorful (26), benchmark_prompt_family (1).
-* **Check outputs:** [`docs/RENDERS_2026-10-04_prompt_writing.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/RENDERS_2026-10-04_prompt_writing.md),
-  [`docs/RENDERS_2026-10-04_blk23_colorful.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/RENDERS_2026-10-04_blk23_colorful.md), [`docs/RENDERS_2026-10-04_prompt_family.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/RENDERS_2026-10-04_prompt_family.md).
-* **Earlier integrity checks:** [notebook page 00](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/00-the-bench.md) (tuner at zero,
-  determinism, noise floor); [notebook page 03](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/03-what-ends-up-in-the-picture.md)
+* **Check outputs:** [`docs/RENDERS_2026-10-04_prompt_writing.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/RENDERS_2026-10-04_prompt_writing.md),
+  [`docs/RENDERS_2026-10-04_blk23_colorful.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/RENDERS_2026-10-04_blk23_colorful.md), [`docs/RENDERS_2026-10-04_prompt_family.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/RENDERS_2026-10-04_prompt_family.md).
+* **Earlier integrity checks:** [notebook page 00](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/00-the-bench.md) (tuner at zero,
+  determinism, noise floor); [notebook page 03](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/03-what-ends-up-in-the-picture.md)
   (the blinding round).
-* **Model structure:** [`docs/model_structures/`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/model_structures/), [`docs/normscales_never_applied.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/normscales_never_applied.md).
+* **Model structure:** [`docs/model_structures/`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/model_structures/), [`docs/normscales_never_applied.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/normscales_never_applied.md).

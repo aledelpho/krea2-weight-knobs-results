@@ -164,8 +164,11 @@ The middle blocks' coherence remains an observation by eye.
 
 ### A change of identity
 
+![Under blk09 +0.45 the female blacksmith stays a woman at seed 5772156 in all three styles, and at seed 1414213 turns into a man in the oil painting and in the photograph.](assets/23-prompt-family-presets/F23.5_blacksmith_identity.webp)
+
 At seed 1414213 blk09 + turns the female blacksmith into a man in the oil and photo families;
-at seed 5772156 — the seed of the sheet above — she stays a woman in all three. The edit moves
+at seed 5772156 — the seed of the sheet above — she stays a woman in all three. In the cartoon
+family the same edit turns the drawing into a three-dimensional render and keeps the woman. The edit moves
 the picture toward the more common reading of the words: "blacksmith" toward a man. CLIPScore on
 the six blacksmith prompts falls by 3.8 under blk09 +, the largest drop of any arm
 (`data/standard_metrics_summary.csv`). One subject, two seeds: this is an observation with a
@@ -181,7 +184,7 @@ without removing the look is untested.
 
 ### Against an earlier overturned result
 
-[Notebook page 09](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/notebook/09-style-direction.md) tested, with criteria frozen in advance,
+[Notebook page 09](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/notebook/09-style-direction.md) tested, with criteria frozen in advance,
 whether the direction a weight edit imprints depends on the declared style more than on the
 subject, and it was overturned: at the usable dose 6 of 12 cells carried the opposite sign. This
 page finds that, for single late blocks, the change is more alike within a style than across
@@ -261,8 +264,8 @@ analysis:
 ## Provenance
 
 * **Renders.** benchmark_prompt_family (433).
-* **Pre-registration:** [`docs/prereg_prompt_family.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/prereg_prompt_family.md), with amendment 1 (four Style-band arms and
+* **Pre-registration:** [`docs/prereg_prompt_family.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/prereg_prompt_family.md), with amendment 1 (four Style-band arms and
   H4), both before any render.
-* **Result documents:** [`docs/prompt_family_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/prompt_family_result.md), [`docs/standard_metrics_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/standard_metrics_result.md).
+* **Result documents:** [`docs/prompt_family_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/prompt_family_result.md), [`docs/standard_metrics_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/standard_metrics_result.md).
 * **Eye pass:** `data/prompt_family_eye_alessandro.csv`, deposited before the scoring ran.
-* **Exploratory basis:** [`docs/style_vs_subject_exploration.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/3886aab18615eadc21362034a8d7c03e1cdc00d7/docs/style_vs_subject_exploration.md).
+* **Exploratory basis:** [`docs/style_vs_subject_exploration.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/4f89b6404b1df4aa2e136ff6e7b6a74a4b79be37/docs/style_vs_subject_exploration.md).
