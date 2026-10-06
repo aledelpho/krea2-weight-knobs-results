@@ -1,11 +1,11 @@
 # Knobs inside the weights: single-block scaling in Krea-2 — results
 
-> **Where this comes from.** This repository holds the final results of the project. The exploratory notebook, the pre-registrations, the analysis scripts and every other experiment live in [the main repository](https://github.com/aledelpho/diffusion-models-weight-steering-report); every link to it is pinned to commit [`e20fcae`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/e20fcae6b9a191b25747aa15b68ab73a4c4052c6), so what you read here is what was there when these pages were published. The data files the pages cite are copied in `data/`.
+> **Where this comes from.** This repository holds the final results of the project. The exploratory notebook, the pre-registrations, the analysis scripts and every other experiment live in [the main repository](https://github.com/aledelpho/diffusion-models-weight-steering-report); every link to it is pinned to commit [`c20687a`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/c20687a6c36243542f45f2afc4798c27f2c1c276), so what you read here is what was there when these pages were published. The data files the pages cite are copied in `data/`.
 
 > **Scope.** Everything here is about one model, Krea-2 (28 single-stream transformer blocks),
 > edited without training by multiplying the weights of single blocks. It is an investigation
 > into whether controllable "knobs" exist inside the weights, not a tool that competes with
-> post-production. The exploratory lab notebook that led here is in [`notebook/`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/notebook)
+> post-production. The exploratory lab notebook that led here is in [`notebook/`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/c20687a6c36243542f45f2afc4798c27f2c1c276/notebook)
 > and stays the record of every test run; this repository holds only the results that were
 > confirmed, or that the report needs in order to be honest about what was not.
 
@@ -66,8 +66,8 @@ The characters stay themselves, but not untouched: the face moves a little more 
 seed would move it, and a prompted expression can turn into a frown ([page 28](28-portrait-preset.md)).
 
 The project started with hand-calibrated presets over the whole stack
-([notebook page 01](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/notebook/01-mark-style.md)) and an exploratory notebook of tests on
-permutations, rotations and block groups ([notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/notebook)). Single blocks turned out to be
+([notebook page 01](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/notebook/01-mark-style.md)) and an exploratory notebook of tests on
+permutations, rotations and block groups ([notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/c20687a6c36243542f45f2afc4798c27f2c1c276/notebook)). Single blocks turned out to be
 the more useful unit: they are finer than the tuner's macro-blocks, and some of them behave the
 same way on every prompt tried. The pages below report what survived confirmation:
 
@@ -112,7 +112,7 @@ in this report; Block Patcher's regex is in fact finer than our per-block vector
 at a time. Neither tool publishes a map, a dose, or a claim about what any block does: their author
 calls them probing tools. **The contribution here is therefore not the edit but its
 characterisation** — a measured per-block map with calibrated doses, pre-registered confirmations,
-and the failures ([`docs/prior_work_block_scaling_tools.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/docs/prior_work_block_scaling_tools.md)).
+and the failures ([`docs/prior_work_block_scaling_tools.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/prior_work_block_scaling_tools.md)).
 
 **Model and metrics.** Krea-2 is described in its technical report [9]. Image quality and
 similarity are measured with CLIP-IQA [10], BRISQUE [11], CLIPScore [12], LPIPS [13], DISTS [14],
@@ -199,4 +199,4 @@ page shows its pre-registration, its data and its reservations.
 | [28 · A preset made by eye, tested blind on characters it never saw](28-portrait-preset.md) | Can someone build a preset from the map that works on new pictures? |
 
 Structure, sources and the list of notebook pages that enter the report:
-[`docs/report_outline.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/docs/report_outline.md).
+[`docs/report_outline.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/report_outline.md).

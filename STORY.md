@@ -232,4 +232,4 @@ model, mostly one observer who knew the conditions — one blind observer for th
 samples of 16 to 56 cases per test.
 
 Other kinds of edit — reordering whole blocks, for instance — are in [appendix A](27-other-edits.md),
-and every experiment that led here is in the [exploratory notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/notebook).
+and every experiment that led here is in the [exploratory notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/c20687a6c36243542f45f2afc4798c27f2c1c276/notebook).

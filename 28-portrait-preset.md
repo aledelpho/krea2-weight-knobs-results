@@ -206,7 +206,7 @@ three seeds, the tiefling at two, the half-orc and the dwarf at one. Not blind, 
 
 The preset contains block 8 at +0.15, which my own guide on page 21 lists as giving less
 expression; it is the first suspect, and scaling it alone on these portraits would test it.
-Details: [`docs/portrait_preset_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/docs/portrait_preset_result.md).
+Details: [`docs/portrait_preset_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/portrait_preset_result.md).
 
 ### Reproducing this
 
@@ -255,13 +255,13 @@ analysis:
 ## Provenance
 
 * **Renders.** benchmark_portraits/renders (457), benchmark_portraits/phase_c (57).
-* **Pre-registration:** [`docs/prereg_portrait_preset.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/docs/prereg_portrait_preset.md), with amendment 1 (model observers) and
+* **Pre-registration:** [`docs/prereg_portrait_preset.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/prereg_portrait_preset.md), with amendment 1 (model observers) and
   amendment 2 (human observer), each committed before its observers answered; the preset was
-  frozen in [`presets/portrait_preset_alessandro.json`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/presets/portrait_preset_alessandro.json) before any test render.
-* **Result document:** [`docs/portrait_preset_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/docs/portrait_preset_result.md).
-* **Render logs:** [`docs/RENDERS_2026-10-05_portraits.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/docs/RENDERS_2026-10-05_portraits.md), [`docs/RENDERS_2026-10-05_portraits_phase_c.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/docs/RENDERS_2026-10-05_portraits_phase_c.md).
+  frozen in [`presets/portrait_preset_alessandro.json`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/presets/portrait_preset_alessandro.json) before any test render.
+* **Result document:** [`docs/portrait_preset_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/portrait_preset_result.md).
+* **Render logs:** [`docs/RENDERS_2026-10-05_portraits.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/RENDERS_2026-10-05_portraits.md), [`docs/RENDERS_2026-10-05_portraits_phase_c.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/RENDERS_2026-10-05_portraits_phase_c.md).
 * **Eye pass:** `data/portrait_preset_eye_alessandro.csv`, deposited before any number.
-* **Phase A plan:** 457 rows written by [`experiments/portraits.py`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/experiments/portraits.py) (`--plan`), committed beside the
+* **Phase A plan:** 457 rows written by [`experiments/portraits.py`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/experiments/portraits.py) (`--plan`), committed beside the
   other bench plans.
-* **Public version of the blind test:** [`experiments/build_try_the_test.py`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/experiments/build_try_the_test.py) builds the page from 14
+* **Public version of the blind test:** [`experiments/build_try_the_test.py`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/experiments/build_try_the_test.py) builds the page from 14
   pairs at seeds 3605551 and 4123105. Answers shared through it are kept apart from this result.

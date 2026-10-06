@@ -155,8 +155,8 @@ composition), averaged over 23 prompts and both signs (`data/block_colour_layout
 The bands hold at the two ends and blur in the middle; the sharpest break is at the Correction
 end, not between Style and Details. Positive pushes of blocks 08, 09 and 10 are the least stable
 of all (0.55, 0.46, 0.51). This agrees with two pre-registered results of the exploratory
-notebook: [every push costs fine texture and the cost grows toward the output](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/notebook/05-knob-or-cost.md),
-and [two places pushed the same distance move the picture in distinguishable directions](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/notebook/08-block1-vs-block6.md)
+notebook: [every push costs fine texture and the cost grows toward the output](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/notebook/05-knob-or-cost.md),
+and [two places pushed the same distance move the picture in distinguishable directions](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/notebook/08-block1-vs-block6.md)
 — position, not only distance, decides what an edit does.
 
 ### What the ends change, and what the middle changes
@@ -166,7 +166,7 @@ can be compared at equal dose. The test asked, before measuring, whether a block
 picture is recognisable as that block's change on another. On the positive side only five blocks
 are: 0, 1, 25, 26 and 27 — the two ends of the stack (p = 0.0015; on the negative side 0, 8, 20 and
 27). Everywhere else, a block does something reproducible on the same picture but something
-different on another ([`docs/single_blocks_atlas_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/docs/single_blocks_atlas_result.md), `data/single_blocks_tests.csv`).
+different on another ([`docs/single_blocks_atlas_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/single_blocks_atlas_result.md), `data/single_blocks_tests.csv`).
 
 Put together with the layout above and with DINOv2 on page 25, the picture is consistent: the ends
 act on **properties of the image** — colour, grain, sharpness, softness — and act the same way
@@ -238,7 +238,7 @@ bench by the artefacts I could see, from OK to BROKEN
 The output end is the most sensitive: pushed positive, blocks 19, 21, 22, 24 and 25 show strong
 artefacts at 0.350 and blocks 26 and 27 destroy the picture; their negative side is safer. This matches a
 pre-registered result of the exploratory notebook — [the cost of a push grows toward the output, and
-the tail is rectified](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/notebook/05-knob-or-cost.md): positive pushes wreck it, negative ones barely
+the tail is rectified](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/notebook/05-knob-or-cost.md): positive pushes wreck it, negative ones barely
 move it. The middle, from block 4 to 11, shows no artefact at this dose in either direction. These
 labels became the starting doses of the later benches: up to 0.45–0.55 in the middle, 0.05–0.15
 on the positive side of blocks 26 and 27.
@@ -310,7 +310,7 @@ can be too strong for a preset.
 | 26 | −0.25 / +0.15 | fewer fine textures | more fine texture, adds grain |
 | 27 | −0.25 / +0.05 | blurs and darkens | adds grain and lightens, like an aggressive sharpen filter |
 
-Where a measurement touches an entry ([`docs/block_groups_and_prompt_order.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/docs/block_groups_and_prompt_order.md) §4, on the
+Where a measurement touches an entry ([`docs/block_groups_and_prompt_order.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/block_groups_and_prompt_order.md) §4, on the
 prompt-order images): the statistics agree on 00, 22, 23 and 27; on 01 "opposite of 00" holds for
 grain and detail but not for the whole effect; on 26 the spectral statistic says the opposite, and
 a 1:1 crop sides with the description — what reads as grain is a mosaic of colour cells. On page
@@ -363,8 +363,8 @@ analysis:
 ## Provenance
 
 * **Renders.** benchmark_single_blocks_styles (684), benchmark_single_blocks_v3 (396), benchmark_single_blocks_v4 (332), benchmark_single_blocks_atlas (171).
-* **Pre-registration (weights only):** [`docs/prereg_block_weight_structure.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/docs/prereg_block_weight_structure.md), committed before
+* **Pre-registration (weights only):** [`docs/prereg_block_weight_structure.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/prereg_block_weight_structure.md), committed before
   any weight was read.
-* **Result documents:** [`docs/block_groups_and_prompt_order.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/docs/block_groups_and_prompt_order.md),
-  [`docs/single_blocks_exploration_synthesis.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/docs/single_blocks_exploration_synthesis.md), [`docs/block_weight_structure_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/e20fcae6b9a191b25747aa15b68ab73a4c4052c6/docs/block_weight_structure_result.md).
+* **Result documents:** [`docs/block_groups_and_prompt_order.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/block_groups_and_prompt_order.md),
+  [`docs/single_blocks_exploration_synthesis.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/single_blocks_exploration_synthesis.md), [`docs/block_weight_structure_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/block_weight_structure_result.md).
 * **Observations:** `data/single_blocks_v4_definitions_alessandro.md` (the original, in Italian, of the guide to each block).
