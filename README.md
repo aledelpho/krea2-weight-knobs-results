@@ -1,11 +1,11 @@
 # Knobs inside the weights: single-block scaling in Krea-2 — results
 
-> **Where this comes from.** This repository holds the final results of the project. The exploratory notebook, the pre-registrations, the analysis scripts and every other experiment live in [the main repository](https://github.com/aledelpho/diffusion-models-weight-steering-report); every link to it is pinned to commit [`ab886d0`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/ab886d033738f43a19bef60abf3501026961c682), so what you read here is what was there when these pages were published. The data files the pages cite are copied in `data/`.
+> **Where this comes from.** This repository holds the final results of the project. The exploratory notebook, the pre-registrations, the analysis scripts and every other experiment live in [the main repository](https://github.com/aledelpho/diffusion-models-weight-steering-report); every link to it is pinned to commit [`9bb82aa`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/9bb82aa42f20da0504a462a1af0f015a8754b13b), so what you read here is what was there when these pages were published. The data files the pages cite are copied in `data/`.
 
 > **Scope.** Everything here is about one model, Krea-2 (28 single-stream transformer blocks),
 > edited without training by multiplying the weights of single blocks. It is an investigation
 > into whether controllable "knobs" exist inside the weights, not a tool that competes with
-> post-production. The exploratory lab notebook that led here is in [`notebook/`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/ab886d033738f43a19bef60abf3501026961c682/notebook)
+> post-production. The exploratory lab notebook that led here is in [`notebook/`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/9bb82aa42f20da0504a462a1af0f015a8754b13b/notebook)
 > and stays the record of every test run; this repository holds only the results that were
 > confirmed, or that the report needs in order to be honest about what was not.
 
@@ -66,8 +66,8 @@ The characters stay themselves, but not untouched: the face moves a little more 
 seed would move it, and a prompted expression can turn into a frown ([page 28](28-portrait-preset.md)).
 
 The project started with hand-calibrated presets over the whole stack
-([notebook page 01](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/ab886d033738f43a19bef60abf3501026961c682/notebook/01-mark-style.md)) and an exploratory notebook of tests on
-permutations, rotations and block groups ([notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/ab886d033738f43a19bef60abf3501026961c682/notebook)). Single blocks turned out to be
+([notebook page 01](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9bb82aa42f20da0504a462a1af0f015a8754b13b/notebook/01-mark-style.md)) and an exploratory notebook of tests on
+permutations, rotations and block groups ([notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/9bb82aa42f20da0504a462a1af0f015a8754b13b/notebook)). Single blocks turned out to be
 the more useful unit: they are finer than the tuner's macro-blocks, and some of them behave the
 same way on every prompt tried. The pages below report what survived confirmation:
 
@@ -114,7 +114,7 @@ in this report; Block Patcher's regex is in fact finer than our per-block vector
 at a time. Neither tool publishes a map, a dose, or a claim about what any block does: their author
 calls them probing tools. **The contribution here is therefore not the edit but its
 characterisation** — a measured per-block map with calibrated doses, pre-registered confirmations,
-and the failures ([`docs/prior_work_block_scaling_tools.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/ab886d033738f43a19bef60abf3501026961c682/docs/prior_work_block_scaling_tools.md)).
+and the failures ([`docs/prior_work_block_scaling_tools.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9bb82aa42f20da0504a462a1af0f015a8754b13b/docs/prior_work_block_scaling_tools.md)).
 
 **Model and metrics.** Krea-2 is described in its technical report [9]. Image quality and
 similarity are measured with CLIP-IQA [10], BRISQUE [11], CLIPScore [12], LPIPS [13], DISTS [14],
@@ -164,7 +164,7 @@ page shows its pre-registration, its data and its reservations.
 | **Holds** | [Reordering whole blocks inside the checkpoint crosses the hatching strokes when pushed one way and runs them parallel when pushed the other, and the sign decides which.](27-other-edits.md#the-hatching-axis) | Pre-registered in notebook page 06, on 16 prompts sharing nothing with the corpus of the observation: 16 of 16 prompts and 79 of 80 image pairs in the predicted direction, Holm p 9.2e-5 at the permutation floor. |
 | **Holds** | [An observer who did not know which image carried the preset chose it as the one closer to the look its author described, on every sheet.](28-portrait-preset.md#a-blind-observer) | Pre-registered amendment 2 (H4): 56 of 56 sheets, held-out characters 12/12 on the original and 12/12 on the mirrored set (p = 0.0002 each); she named LEFT exactly 28 times and never the same side on both versions of a pair (position check 0/28). One observer. |
 | **Holds** | [A preset calibrated by eye on four character portraits changes three characters it never saw in a common direction, about as coherently as it changes the four it was tuned on.](28-portrait-preset.md#the-look-carries-over) | Pre-registered (C52), preset frozen before any test render. Median coherence across the held-out characters 0.51 (threshold 0.40), against 0.61 on the calibration characters (allowed gap 0.15); the preset agrees with itself across seeds at 0.78 (H1, H2). |
-| **Holds** | [Even the middle-block edits chosen because they looked clean carry a visible surface cost on new prompts; the cost is concentrated in a few edits and depends on the prompt.](29-inside-the-block.md#what-the-middle-costs) | Pre-registered (C60) P4: edited-side damage of medium or stronger 0.19 against 0 on the baseline side, Newcombe 95% [0.11, 0.28], above the 0.10 bound for "no detectable cost". Four of the ten edits carry all of it (block 19 MLP + 8 of 9 pairs); six are at 0 of 9. Self-agreement on 15 repeats: 1.00. |
+| **Holds** | [Even the middle-block edits chosen because they looked clean carry a visible surface cost on new prompts; the cost is concentrated in a few edits and depends on the prompt.](29-inside-the-block.md#what-the-middle-costs) | Pre-registered (C60) P4: edited-side damage of medium or stronger 0.19 against 0 on the baseline side, Newcombe 95% [0.11, 0.28], above the 0.10 bound for "no detectable cost". Four of the ten edits carry all of it (block 19 MLP + 8 of 9 pairs); six are at 0 of 9. Self-agreement on 15 repeats: 1.00. A follow-up on the six clean edits (C63, four new illustration prompts, 72 pairs) could not decide whether they are free: 4 of 72 damaged against 0, Newcombe [-0.005, 0.134], three of the four from block 9 attention +. |
 | **Holds** | [On comic and cartoon prompts, edits to blocks 1-19 change the picture more than edits to blocks 20-27 at the same dose, and damage its surface far less often.](29-inside-the-block.md#form-against-surface) | Pre-registered (C60), new prompts and seeds, blind pairs. Layout r per edit: median 0.72 against 0.84, one-sided Mann-Whitney p = 0.007. Change seen by eye: 1.59 against 0.47 on a 0-2 scale, p = 0.0002 (0.002 with unanswered pairs scored as the most change). Damage of medium or stronger on the edited side: 17 of 90 pairs against 71 of 90; baseline sides 0 of 180. |
 | **Ambiguous** | [How much a block rewrites the picture can be read, in part, from the spectra of its own MLP weights, beyond what its depth explains.](21-block-map.md#what-the-weights-show) | Pre-registered (C46). Best Spearman rho 0.615 with depth removed, above the Bonferroni threshold 0.57, so the rule says supported; leaving one block out moves it between 0.50 and 0.70, so a single block can undo it. Correlational, 28 blocks, one checkpoint. |
 | **Ambiguous** | [Rewriting a prompt — reordering it, turning it into tags, using synonyms — changes the direction of a block's effect no more than changing the seed does, while changing the subject changes it a great deal.](24-wording.md#the-registered-rule) | Pre-registered (C45), verdict inconclusive by its own rule. Writing against seed, median -0.04 (threshold -0.10): met. Writing more alike than subject on 12 of 12 scored arms (threshold 75 percent): met. Writing more alike than a one-object content change on 0 of 12 (threshold 60 percent): not met. By eye, the same change under every writing on all 24 arms. |
@@ -209,4 +209,4 @@ page shows its pre-registration, its data and its reservations.
 | [29 · Inside a block — attention, MLP, and what an edit costs](29-inside-the-block.md) | Do the two halves of a block do different things, and is the noise the price of every push? |
 
 Structure, sources and the list of notebook pages that enter the report:
-[`docs/report_outline.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/ab886d033738f43a19bef60abf3501026961c682/docs/report_outline.md).
+[`docs/report_outline.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9bb82aa42f20da0504a462a1af0f015a8754b13b/docs/report_outline.md).
