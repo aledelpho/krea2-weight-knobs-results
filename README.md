@@ -1,11 +1,11 @@
 # Knobs inside the weights: single-block scaling in Krea-2 — results
 
-> **Where this comes from.** This repository holds the final results of the project. The exploratory notebook, the pre-registrations, the analysis scripts and every other experiment live in [the main repository](https://github.com/aledelpho/diffusion-models-weight-steering-report); every link to it is pinned to commit [`9bb82aa`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/9bb82aa42f20da0504a462a1af0f015a8754b13b), so what you read here is what was there when these pages were published. The data files the pages cite are copied in `data/`.
+> **Where this comes from.** This repository holds the final results of the project. The exploratory notebook, the pre-registrations, the analysis scripts and every other experiment live in [the main repository](https://github.com/aledelpho/diffusion-models-weight-steering-report); every link to it is pinned to commit [`428a773`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/428a77380156bd1b9d1d3e310cb66b328bb3841c), so what you read here is what was there when these pages were published. The data files the pages cite are copied in `data/`.
 
 > **Scope.** Everything here is about one model, Krea-2 (28 single-stream transformer blocks),
 > edited without training by multiplying the weights of single blocks. It is an investigation
 > into whether controllable "knobs" exist inside the weights, not a tool that competes with
-> post-production. The exploratory lab notebook that led here is in [`notebook/`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/9bb82aa42f20da0504a462a1af0f015a8754b13b/notebook)
+> post-production. The exploratory lab notebook that led here is in [`notebook/`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/428a77380156bd1b9d1d3e310cb66b328bb3841c/notebook)
 > and stays the record of every test run; this repository holds only the results that were
 > confirmed, or that the report needs in order to be honest about what was not.
 
@@ -66,8 +66,8 @@ The characters stay themselves, but not untouched: the face moves a little more 
 seed would move it, and a prompted expression can turn into a frown ([page 28](28-portrait-preset.md)).
 
 The project started with hand-calibrated presets over the whole stack
-([notebook page 01](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9bb82aa42f20da0504a462a1af0f015a8754b13b/notebook/01-mark-style.md)) and an exploratory notebook of tests on
-permutations, rotations and block groups ([notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/9bb82aa42f20da0504a462a1af0f015a8754b13b/notebook)). Single blocks turned out to be
+([notebook page 01](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/428a77380156bd1b9d1d3e310cb66b328bb3841c/notebook/01-mark-style.md)) and an exploratory notebook of tests on
+permutations, rotations and block groups ([notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/428a77380156bd1b9d1d3e310cb66b328bb3841c/notebook)). Single blocks turned out to be
 the more useful unit: they are finer than the tuner's macro-blocks, and some of them behave the
 same way on every prompt tried. The pages below report what survived confirmation:
 
@@ -114,7 +114,16 @@ in this report; Block Patcher's regex is in fact finer than our per-block vector
 at a time. Neither tool publishes a map, a dose, or a claim about what any block does: their author
 calls them probing tools. **The contribution here is therefore not the edit but its
 characterisation** — a measured per-block map with calibrated doses, pre-registered confirmations,
-and the failures ([`docs/prior_work_block_scaling_tools.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9bb82aa42f20da0504a462a1af0f015a8754b13b/docs/prior_work_block_scaling_tools.md)).
+and the failures ([`docs/prior_work_block_scaling_tools.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/428a77380156bd1b9d1d3e310cb66b328bb3841c/docs/prior_work_block_scaling_tools.md)).
+
+**Learned per-block scaling.** Calibri calibrates a diffusion transformer with about a hundred
+scaling coefficients — one per block, or one per attention and MLP layer, or one per gate — found by
+an evolutionary search against a reward, and reports that the calibrated FLUX, SD-3.5 and Qwen-Image
+models are better than the originals [19]. It is the closest published work to this report: the same
+kind of edit, a multiplier on part of a block, but searched by a reward model rather than mapped by eye.
+Scaling the output projection of an attention or an MLP, as our edits do among others, is close to
+scaling that layer's output, which is what Calibri tunes. Calibri does not analyse attention against
+MLP or early against late blocks; page 29 does, and finds that they differ.
 
 **Model and metrics.** Krea-2 is described in its technical report [9]. Image quality and
 similarity are measured with CLIP-IQA [10], BRISQUE [11], CLIPScore [12], LPIPS [13], DISTS [14],
@@ -140,6 +149,7 @@ SSIM [15] and DINOv2 [16] (page 25).
 16. Oquab, Darcet, Moutakanni, Vo, Szafraniec, et al. *DINOv2: Learning Robust Visual Features without Supervision.* arXiv:2304.07193
 17. cubiq. *FluxBlocksBuster+*, node in *ComfyUI_essentials* (software), `conditioning.py`. github.com/cubiq/ComfyUI_essentials
 18. cubiq. *Block_Patcher_ComfyUI — experimental sampler to iterate through blocks weight* (software). github.com/cubiq/Block_Patcher_ComfyUI
+19. Tokhchukov, Mirzoeva, Kuznetsov, Sobolev. *Calibri: Enhancing Diffusion Transformers via Parameter-Efficient Calibration.* arXiv:2603.24800, 2026.
 
 ## How to read the table below
 
@@ -209,4 +219,4 @@ page shows its pre-registration, its data and its reservations.
 | [29 · Inside a block — attention, MLP, and what an edit costs](29-inside-the-block.md) | Do the two halves of a block do different things, and is the noise the price of every push? |
 
 Structure, sources and the list of notebook pages that enter the report:
-[`docs/report_outline.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9bb82aa42f20da0504a462a1af0f015a8754b13b/docs/report_outline.md).
+[`docs/report_outline.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/428a77380156bd1b9d1d3e310cb66b328bb3841c/docs/report_outline.md).
