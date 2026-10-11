@@ -172,9 +172,9 @@ analysis:
 ## Provenance
 
 * **Renders.** benchmark_prompt_writing (401), benchmark_prompt_order (570).
-* **Pre-registration:** [`docs/prereg_prompt_writing.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/prereg_prompt_writing.md), with amendment 1; scoring code
+* **Pre-registration:** [`docs/prereg_prompt_writing.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/ab886d033738f43a19bef60abf3501026961c682/docs/prereg_prompt_writing.md), with amendment 1; scoring code
   committed before any render.
-* **Result documents:** [`docs/prompt_writing_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/prompt_writing_result.md), [`docs/block_groups_and_prompt_order.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/c20687a6c36243542f45f2afc4798c27f2c1c276/docs/block_groups_and_prompt_order.md)
+* **Result documents:** [`docs/prompt_writing_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/ab886d033738f43a19bef60abf3501026961c682/docs/prompt_writing_result.md), [`docs/block_groups_and_prompt_order.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/ab886d033738f43a19bef60abf3501026961c682/docs/block_groups_and_prompt_order.md)
   §3 (word order, exploratory).
 * **Eye pass:** `data/prompt_writing_eye_alessandro.csv`, deposited before the test ran.
 * **Data:** `data/prompt_writing_style_features.csv`, `data/prompt_writing_arms.csv`,
