@@ -257,7 +257,12 @@ or double it.
 
 The pictures change a lot, but not the way they do when you push the image model. They don't get noisy.
 They change **genre** — a Western comic becomes anime, a cartoon, a children's book — and usually *who*
-is drawn: the elf loses her antlers, her ears, her skin tone, often her face. Removing a layer half
+is drawn: the elf loses her antlers, her ears, her skin tone, often her face.
+
+![Four characters at one seed under three edits: L19 attention zeroed keeps each face (similarity 0.77-0.91 where a face is found), L12 MLP doubled redraws them in another style with lower similarity, and L06 MLP doubled turns the dwarf and the gnome into realistic photographs (similarity 0.15 and 0.17).](assets/30-the-text-encoder/F30.12_te_characters_identity_sheet.webp)
+
+The destination even depends on who is drawn: the same edit that scatters my elf between comic and anime
+turns a dwarf and a gnome into photographs. Removing a layer half
 does little; doubling one does a lot. And the same edit on the same words, written in a different order,
 can land in a different genre.
 
@@ -355,4 +360,4 @@ model, mostly one observer who knew the conditions — one blind observer for th
 samples of 16 to 56 cases per test.
 
 Other kinds of edit — reordering whole blocks, for instance — are in [appendix A](27-other-edits.md),
-and every experiment that led here is in the [exploratory notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/17ebe506f88403e6b19d1ad1c08fd11259df289b/notebook).
+and every experiment that led here is in the [exploratory notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/d34fc353404acb38f8efc780ff387b2474cc7392/notebook).

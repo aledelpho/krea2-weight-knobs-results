@@ -285,6 +285,8 @@ directions; four or five tokens apart the relation has halved (half-life 3 token
 commas, most clearly in the middle of the encoder. These regions are as stable across word orders as
 the shared push, so they do not explain why word order matters (C68 H3, Spearman -0.37, not supported).
 
+![By depth of the text-encoder reading, the residual push stays related over two to four tokens, and tokens of the same clause are pushed more alike than tokens across clauses from layer 11 on, most at layers 20-26.](assets/30-the-text-encoder/F30.11_te_regions_by_tap.webp)
+
 ### Genre and identity, not surface
 
 The C64 pilot doubled or removed each half of each of the 35 layers the image model reads, on the elf,
@@ -302,6 +304,12 @@ the same way (page 28); these edits do not. Only 4 of 20 were coherent across ch
 same way in colour and contrast, but each character lands in a different genre. At ±1 these edits also
 change who is drawn: identity is kept for at most two eligible characters in 19 of 20 edits.
 
+![Four characters at one seed under three edits: L19 attention zeroed keeps each face (similarity 0.77-0.91 where a face is found), L12 MLP doubled redraws them in another style with lower similarity, and L06 MLP doubled turns the dwarf and the gnome into realistic photographs (similarity 0.15 and 0.17).](assets/30-the-text-encoder/F30.12_te_characters_identity_sheet.webp)
+
+The figure also shows that the destination depends on the character. On these portraits L06 MLP doubled
+turns the dwarf and the gnome into photographs, not anime; on the elf (below) the same edit scatters the word
+orders between comic, anime and cartoon. Anime is the elf's fallback, not every character's.
+
 ### Where the switches go
 
 C70 asked Alessandro to name the genre of each of the 105 pictures of the word-order test (seed
@@ -311,6 +319,8 @@ genre: **39 to anime**, 11 to cartoon, none to realistic or painting. No edit th
 changed the genre. Two patterns appear among those that do. L05, L20 and L25 MLP doubled send all five
 orders to anime. L06, L09, L12 and L14 MLP doubled scatter them across genres; these are the edits he
 had scored highest for word-order dependence.
+
+![For each of the 20 edits, sorted by the size of their push, the genre of the five word-order pictures: the edits that zero a layer half and the smallest pushes stay Western comic, the larger pushes turn mostly anime, a few scatter into cartoon, and L28 MLP doubled stays comic despite a mid-size push.](assets/30-the-text-encoder/F30.13_te_genre_by_edit.webp)
 
 ### Inside the image model
 
@@ -448,13 +458,13 @@ analysis:
 
 * Renders: C64 pilot (463), C65 characters (531), C69 bridge (25), C72 defaults (280).
 * Encodes without images: C67 (721), C68 (241), C71 (16).
-* **Pre-registrations:** [`docs/prereg_te_characters.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/prereg_te_characters.md) (+ amendments 1-3), [`docs/prereg_te_conditioning.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/prereg_te_conditioning.md)
-  (+ amendments 1-2), [`docs/prereg_te_regions.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/prereg_te_regions.md), [`docs/prereg_te_bridge.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/prereg_te_bridge.md), [`docs/prereg_te_genre.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/prereg_te_genre.md)
-  (+ amendments 1-2), [`docs/prereg_te_direction.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/prereg_te_direction.md), [`docs/prereg_te_default.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/prereg_te_default.md) (+ amendments 1-2); the pilot plan [`docs/plan_te_pilot.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/plan_te_pilot.md).
-* **Result documents:** [`docs/te_pilot_phase1_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/te_pilot_phase1_result.md), [`docs/te_characters_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/te_characters_result.md),
-  [`docs/te_characters_eye_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/te_characters_eye_result.md), [`docs/te_order_grid_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/te_order_grid_result.md), [`docs/te_conditioning_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/te_conditioning_result.md),
-  [`docs/te_regions_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/te_regions_result.md), [`docs/te_bridge_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/te_bridge_result.md), [`docs/te_genre_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/te_genre_result.md),
-  [`docs/te_direction_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/te_direction_result.md), [`docs/te_default_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/te_default_result.md).
+* **Pre-registrations:** [`docs/prereg_te_characters.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/prereg_te_characters.md) (+ amendments 1-3), [`docs/prereg_te_conditioning.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/prereg_te_conditioning.md)
+  (+ amendments 1-2), [`docs/prereg_te_regions.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/prereg_te_regions.md), [`docs/prereg_te_bridge.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/prereg_te_bridge.md), [`docs/prereg_te_genre.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/prereg_te_genre.md)
+  (+ amendments 1-2), [`docs/prereg_te_direction.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/prereg_te_direction.md), [`docs/prereg_te_default.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/prereg_te_default.md) (+ amendments 1-2); the pilot plan [`docs/plan_te_pilot.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/plan_te_pilot.md).
+* **Result documents:** [`docs/te_pilot_phase1_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/te_pilot_phase1_result.md), [`docs/te_characters_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/te_characters_result.md),
+  [`docs/te_characters_eye_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/te_characters_eye_result.md), [`docs/te_order_grid_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/te_order_grid_result.md), [`docs/te_conditioning_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/te_conditioning_result.md),
+  [`docs/te_regions_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/te_regions_result.md), [`docs/te_bridge_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/te_bridge_result.md), [`docs/te_genre_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/te_genre_result.md),
+  [`docs/te_direction_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/te_direction_result.md), [`docs/te_default_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/te_default_result.md).
 * **Data:** `data/te_pilot_eye_alessandro_phase1.csv`, `data/te_order_grid_notes_alessandro.csv`,
   `data/te_order_tests.csv`, `data/te_size_within_type.csv`, `data/te_genre_alessandro.csv`, `data/te_genre_dose_alessandro.csv`,
   `data/te_bridge_style.csv`, `data/te_direction_by_edit.csv`, `data/te_direction_norms.csv`,

@@ -136,7 +136,7 @@ C58 and a band-pass measure all failed against the eye on the noise that matters
 change, the same measures rank the eye's noise only moderately (AUC 0.75-0.81). A pre-registered
 search for a better one (C62, eight candidates chosen on C59 and tested on C60) found none: the best
 remained the size of the fine-texture change, AUC 0.79 on the test set, below its 0.85 bar
-([`docs/noise_metric_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/noise_metric_result.md)). Every noise statement on this page rests on the eye.
+([`docs/noise_metric_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/noise_metric_result.md)). Every noise statement on this page rests on the eye.
 
 **One dose, illustration-heavy.** All tests use ±0.35, except C61 at ±0.20. Six of seven prompts
 are drawn; the only photographs are in C61, where they behaved differently.
@@ -156,7 +156,7 @@ screen). Blocks 2, 3, 5 and 7 to 9 are clean in all six conditions. Among the 19
 where either half is noisy, the MLP is noisier in 13, the attention in 2, with 4 ties. At blocks 26
 and 27 pushed positive both halves are noisy and the whole block is worse than either. A first
 reading of mine from small thumbnails had put the block-26 noise in the attention alone; at full
-resolution both halves carry it, and that reading was withdrawn ([`docs/split_atlas_eye_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/split_atlas_eye_result.md)).
+resolution both halves carry it, and that reading was withdrawn ([`docs/split_atlas_eye_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/split_atlas_eye_result.md)).
 
 ### The first block
 
@@ -207,7 +207,7 @@ At 100% the damage is not the late blocks' grain: flat areas such as a sky break
 rectangles. Block 19 MLP + was clean on the prompts it was chosen on and is the most damaged here,
 so the cost depends on the prompt.
 
-A follow-up (C63, [`docs/clean_six_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/clean_six_result.md)) put the six edits that came out clean on four new
+A follow-up (C63, [`docs/clean_six_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/clean_six_result.md)) put the six edits that came out clean on four new
 illustration prompts at three new seeds, 72 blind pairs, with two late-block edits as a positive control
 (damaged in 24 of 24). Four of the 72 were damaged against none of their baselines, three of them from
 block 9 attention +: too few pairs to call the six free (the interval reaches 13%) or costly (it reaches
@@ -273,11 +273,11 @@ analysis:
 ## Provenance
 
 * Renders: split atlas C59 (1016), comic form C60 (191), cost floor C61 (913).
-* **Pre-registrations:** [`docs/prereg_comic_form_test.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/prereg_comic_form_test.md) (+ amendments 1 and 2),
-  [`docs/prereg_cost_floor.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/prereg_cost_floor.md) (+ amendment 1), [`docs/split_atlas_eye_protocol.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/split_atlas_eye_protocol.md) (+ amendment 1);
-  the atlas plan [`docs/plan_split_atlas.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/plan_split_atlas.md); the earlier block-23 split [`docs/prereg_blk23_split.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/prereg_blk23_split.md).
-* **Result documents:** [`docs/split_atlas_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/split_atlas_result.md), [`docs/split_atlas_eye_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/split_atlas_eye_result.md),
-  [`docs/comic_form_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/comic_form_result.md), [`docs/cost_floor_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/cost_floor_result.md), [`docs/blk23_split_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/blk23_split_result.md).
+* **Pre-registrations:** [`docs/prereg_comic_form_test.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/prereg_comic_form_test.md) (+ amendments 1 and 2),
+  [`docs/prereg_cost_floor.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/prereg_cost_floor.md) (+ amendment 1), [`docs/split_atlas_eye_protocol.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/split_atlas_eye_protocol.md) (+ amendment 1);
+  the atlas plan [`docs/plan_split_atlas.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/plan_split_atlas.md); the earlier block-23 split [`docs/prereg_blk23_split.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/prereg_blk23_split.md).
+* **Result documents:** [`docs/split_atlas_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/split_atlas_result.md), [`docs/split_atlas_eye_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/split_atlas_eye_result.md),
+  [`docs/comic_form_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/comic_form_result.md), [`docs/cost_floor_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/cost_floor_result.md), [`docs/blk23_split_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d34fc353404acb38f8efc780ff387b2474cc7392/docs/blk23_split_result.md).
 * **Data:** `data/split_atlas_eye_alessandro.csv`, `data/split_atlas_eye_key.csv`,
   `data/comic_form_eye_alessandro.csv`, `data/comic_form_eye_key.csv`, `data/comic_form_layout.csv`,
   `data/cost_floor_measures.csv`, `data/cost_floor_cells_G1.csv`, `data/punto7_blocks.csv`.
