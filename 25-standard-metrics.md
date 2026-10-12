@@ -175,9 +175,9 @@ analysis:
 ## Provenance
 
 * **Renders.** benchmark_prompt_writing (401), benchmark_blk23_colorful (128), benchmark_prompt_family (433).
-* **Pre-registration:** [`docs/prereg_standard_metrics.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d6ef32b6f672d2361259c4caecc29b66cd7f4c5a/docs/prereg_standard_metrics.md), written before any of the metrics was
+* **Pre-registration:** [`docs/prereg_standard_metrics.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/prereg_standard_metrics.md), written before any of the metrics was
   computed on these images; H5's wording was fixed in it before the run.
-* **Result document:** [`docs/standard_metrics_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d6ef32b6f672d2361259c4caecc29b66cd7f4c5a/docs/standard_metrics_result.md).
+* **Result document:** [`docs/standard_metrics_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/standard_metrics_result.md).
 * **Data:** `data/standard_metrics_c45.csv`, `data/standard_metrics_c47.csv`,
   `data/standard_metrics_c49.csv`, `data/standard_metrics_summary.csv`.
-* **Run notes:** [`docs/RENDERS_2026-10-05_standard_metrics.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/d6ef32b6f672d2361259c4caecc29b66cd7f4c5a/docs/RENDERS_2026-10-05_standard_metrics.md).
+* **Run notes:** [`docs/RENDERS_2026-10-05_standard_metrics.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/17ebe506f88403e6b19d1ad1c08fd11259df289b/docs/RENDERS_2026-10-05_standard_metrics.md).
