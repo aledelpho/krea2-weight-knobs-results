@@ -323,17 +323,40 @@ style"... draws cowboys. The model reads "western" as the Wild West!
 
 ![Four phrases alone at four seeds: 'realistic western comics style' draws bearded cowboys in comic panels, 'uniform' anime schoolgirls, 'female dwarf' a woman with a beard every time, and the elf's own description mostly anime.](assets/30-the-text-encoder/F30.10_te_word_priors_sheet.webp)
 
-Said so, two honest warnings. My genre labels are coarse: two pictures I labelled "Western comic" can look
-nothing alike, so "no change of genre" doesn't mean "same style". And all these edits were extreme:
-"doubling" an MLP scales all three of its matrices, which is far stronger than the word suggests. The next
-test walks the dose down, step by step.
+Said so, two warnings. My genre labels are coarse: two pictures I labelled "Western comic" can look nothing alike,
+so "no change of genre" doesn't mean "same style". And all these edits were extreme: "doubling" an MLP scales all
+three of its matrices, which is far stronger than the word suggests.
+
+So I walked the dose down. Three edits, twelve doses from a tenth of the edit to the full one, three portraits,
+two seeds, all compared side by side. First surprise: nothing breaks. Not one picture loses coherence, even at full
+dose. Second: the style is stubborn. Below 0.70 nothing changes style at all; then one edit jumps from comic to
+photograph in a single step, and another slides slowly toward cartoon.
+
+The third is the one that matters to me. Before the style moves, the character is already gone. My half-orc loses
+her tusks, which I asked for, and her pointed ears and grey skin, which the model had chosen, while she is still
+drawn as a comic; the elf rogue's dark skin lightens, though I never asked for a skin tone; the control edit, which never touches the style, still dresses the half-orc in a high oriental collar.
+And the changes all lean the same way: toward a lighter-skinned, more generic human. For me this is the real damage
+of a text-encoder edit: it doesn't break the picture, it makes the model forget what I asked for and fill the gap
+with its defaults.
+
+So I tested it blind. Every phrase of the prompt became a yes/no question, asked one at a time over every picture,
+with no dose and no edit on screen. The traits fall with the dose, and they go before the style. Then the control I
+cared about most: random pushes of the same size, labelled by someone who had never seen these pictures and knew
+nothing about what I'm doing. Random pushes keep nine traits in ten. Two of my edits keep half to two thirds. And when
+those two change the skin, it goes lighter, 14 times out of 14, while random pushes almost never touch it. The third
+edit, L28, keeps the character better than the random pushes do. So it isn't the size of the push: it's where each
+edit points.
+
+![Three portraits at full dose: the original, the real edit and two random pushes of the same size; under L06 and L14 the real edit turns the elf and the half-orc into lighter-skinned generic humans while the random pushes keep them, and under L28 the real edit keeps the dwarf while the random pushes change her.](assets/30-the-text-encoder/F30.20_te_traits_sheet.webp)
+
+![Three portraits along the dose ladder: under L06 the half-orc loses her orc features by 0.70 and becomes a photograph at 0.80; under L14 the elf rogue's skin lightens before the picture turns more cartoon; under L28 the half-orc stays a comic while her face and collar change.](assets/30-the-text-encoder/F30.16_te_dose_sheet.webp)
 
 → [page 30](30-the-text-encoder.md) · the size of the push predicts the change **holds**, mostly between
 kinds of edit · these edits change genre and identity more than they damage the surface **holds** · one edit moves every character the same way
 **overturned** · the switch comes from less attention on the style words **overturned** · or from a push
 toward "anime" **overturned** · without style words the elf falls back to anime **holds** · every character has its own fallback **holds** · edits lead there **overturned** · random
 pushes of the same size do it too **ambiguous** (only if they vary across words) · each edit's own direction
-decides **open**
+decides **open** · along the dose the style moves before the picture breaks, which it never does **holds** · gradually **holds\*** (\*pooled: one edit slides, one jumps) · the character's traits go first **holds** (L06, L14) · and that cost follows each edit's direction, not its size **holds** · dark skin turns lighter under those edits **holds**
 
 ---
 
@@ -361,14 +384,15 @@ written by eye and meant to be corrected, is on [page 21](21-block-map.md#a-star
 ![Every block pushed in both directions on a four-panel comic page: the last blocks change colour, softness and grain of the same panels, the middle blocks redraw the characters and the panels themselves.](assets/21-block-map/F21.5_guide_comic.webp)
 
 What I don't know yet: whether the clean middle edits are truly free; whether a measure can ever replace
-the eye on noise; why each text-encoder edit points where it does, and whether milder doses make usable
-knobs; whether a preset can keep a character's expression as well as its identity (the portrait preset
+the eye on noise; why each text-encoder edit points where it does, and why two of them wipe out the
+character and lighten the skin while a third protects it (milder doses don't help much: the style holds, but the
+character starts going well before); whether a preset can keep a character's expression as well as its identity (the portrait preset
 kept who they were, not always how they looked at you); whether a blind observer would still say "same
 character" when some sheets show two different ones; whether the noise of a preset can be cleaned
 afterwards without losing its look; how much each block writes into the model's internal signal; and
 whether any of this carries over to another model. Keep in mind that all of this is one model, mostly one
-observer who knew the conditions (one blind observer for the portraits), and samples of 16 to 56 cases
+observer who knew the conditions (one blind observer for the portraits, and one for the text-encoder control), and samples of 16 to 56 cases
 per test.
 
 Other kinds of edit — reordering whole blocks, for instance — are in [appendix A](27-other-edits.md), and
-every experiment that led here is in the [exploratory notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/e3067ea081b073f5d3171891212922a3a30e2a97/notebook).
+every experiment that led here is in the [exploratory notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/9fc78764936a65a196154505d637f8ffd104c6ac/notebook).
