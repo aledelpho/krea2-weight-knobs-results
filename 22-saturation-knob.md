@@ -156,7 +156,7 @@ CLIP-IQA by at most 0.02 (`data/standard_metrics_summary.csv`).
 A reader asked for the comparison that matters in practice: not the words, but the baseline with
 its saturation raised or lowered afterwards. No new render was needed. Each baseline was passed
 through an ordinary saturation slider, with the strength chosen so that its colour change equals
-that of the blk23 image it is compared with (C53, [`docs/prereg_blk23_vs_postproc.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9fc78764936a65a196154505d637f8ffd104c6ac/docs/prereg_blk23_vs_postproc.md)).
+that of the blk23 image it is compared with (C53, [`docs/prereg_blk23_vs_postproc.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0743f59e7957ab95d488fd03056dd4db9a52cd19/docs/prereg_blk23_vs_postproc.md)).
 
 ![On every prompt the slider keeps the baseline exactly and only moves colour, while blk23 -0.45 adds colour with deeper shadows and blk23 +0.30 removes it with a softer, hazier picture; the words change the picture most.](assets/22-saturation-knob/F22.5_blk23_against_slider.webp)
 
@@ -184,7 +184,7 @@ colours looked better to me. This is the
 diagnostic observer; the primary one, who has not seen the project, has not answered yet. LPIPS
 and DINOv2 for this comparison are pending. Data: `data/blk23_postproc_match.csv`,
 `data/blk23_postproc_measures.csv`, `data/blk23_postproc_blind_tests_alessandro.csv`; details in
-[`docs/blk23_postproc_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9fc78764936a65a196154505d637f8ffd104c6ac/docs/blk23_postproc_result.md).
+[`docs/blk23_postproc_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0743f59e7957ab95d488fd03056dd4db9a52cd19/docs/blk23_postproc_result.md).
 
 ### A curiosity: the hood that almost any edit completes
 
@@ -229,13 +229,13 @@ path that lands on one side of the ridge. Two things follow. Every edit in this 
 re-draw of the unstable details along with its intended effect, which is part of what a slider on the
 finished image does not do. And a claim that an edit *fixes* a detail, made on one seed, needs other
 edits of the same seed as its control. Data: `data/hood_tally_alessandro.csv`, `data/hood_threshold_tally.csv`,
-`data/hood_scout_seeds.csv`; details in [`docs/hood_watershed_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9fc78764936a65a196154505d637f8ffd104c6ac/docs/hood_watershed_result.md),
-[`docs/hood_threshold_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9fc78764936a65a196154505d637f8ffd104c6ac/docs/hood_threshold_result.md), [`docs/hood_second_ridge_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9fc78764936a65a196154505d637f8ffd104c6ac/docs/hood_second_ridge_result.md).
+`data/hood_scout_seeds.csv`; details in [`docs/hood_watershed_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0743f59e7957ab95d488fd03056dd4db9a52cd19/docs/hood_watershed_result.md),
+[`docs/hood_threshold_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0743f59e7957ab95d488fd03056dd4db9a52cd19/docs/hood_threshold_result.md), [`docs/hood_second_ridge_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0743f59e7957ab95d488fd03056dd4db9a52cd19/docs/hood_second_ridge_result.md).
 
 ### The controls
 
 Every image of the 26 conditions that already existed on older benches at the original seed
-was re-rendered and came out pixel-identical ([`docs/RENDERS_2026-10-04_blk23_colorful.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9fc78764936a65a196154505d637f8ffd104c6ac/docs/RENDERS_2026-10-04_blk23_colorful.md)).
+was re-rendered and came out pixel-identical ([`docs/RENDERS_2026-10-04_blk23_colorful.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0743f59e7957ab95d488fd03056dd4db9a52cd19/docs/RENDERS_2026-10-04_blk23_colorful.md)).
 
 ### Reproducing this
 
@@ -296,11 +296,11 @@ analysis:
 ## Provenance
 
 * **Renders.** benchmark_blk23_colorful (128).
-* **Pre-registration:** [`docs/prereg_blk23_vs_colorful.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9fc78764936a65a196154505d637f8ffd104c6ac/docs/prereg_blk23_vs_colorful.md), with amendment 1 (eye page also for the
+* **Pre-registration:** [`docs/prereg_blk23_vs_colorful.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0743f59e7957ab95d488fd03056dd4db9a52cd19/docs/prereg_blk23_vs_colorful.md), with amendment 1 (eye page also for the
   desaturating side). Committed with its scoring code in 76e8180, before any render.
-* **Result documents:** [`docs/blk23_vs_colorful_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9fc78764936a65a196154505d637f8ffd104c6ac/docs/blk23_vs_colorful_result.md), [`docs/standard_metrics_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9fc78764936a65a196154505d637f8ffd104c6ac/docs/standard_metrics_result.md).
+* **Result documents:** [`docs/blk23_vs_colorful_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0743f59e7957ab95d488fd03056dd4db9a52cd19/docs/blk23_vs_colorful_result.md), [`docs/standard_metrics_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0743f59e7957ab95d488fd03056dd4db9a52cd19/docs/standard_metrics_result.md).
 * **Data:** `data/blk23_colorful_measures.csv`, `data/blk23_colorful_test.csv`,
   `data/blk23_matched_chroma.csv`, `data/blk23_colorful_eye_alessandro.csv`,
   `data/blk23_saturation_all.csv`, `data/standard_metrics_c47.csv`.
 * **Exploratory history:** the knob was first noticed on the single-block benches
-  ([`docs/single_blocks_exploration_synthesis.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9fc78764936a65a196154505d637f8ffd104c6ac/docs/single_blocks_exploration_synthesis.md) §5).
+  ([`docs/single_blocks_exploration_synthesis.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0743f59e7957ab95d488fd03056dd4db9a52cd19/docs/single_blocks_exploration_synthesis.md) §5).

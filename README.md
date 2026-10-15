@@ -1,16 +1,17 @@
 # Knobs inside the weights: single-block scaling in Krea-2 — results
 
-> **Where this comes from.** This repository holds the final results of the project. The exploratory notebook, the pre-registrations, the analysis scripts and every other experiment live in [the main repository](https://github.com/aledelpho/diffusion-models-weight-steering-report); every link to it is pinned to commit [`9fc7876`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/9fc78764936a65a196154505d637f8ffd104c6ac), so what you read here is what was there when these pages were published. The data files the pages cite are copied in `data/`.
+> **Where this comes from.** This repository holds the final results of the project. The exploratory notebook, the pre-registrations, the analysis scripts and every other experiment live in [the main repository](https://github.com/aledelpho/diffusion-models-weight-steering-report); every link to it is pinned to commit [`0743f59`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/0743f59e7957ab95d488fd03056dd4db9a52cd19), so what you read here is what was there when these pages were published. The data files the pages cite are copied in `data/`.
 
 > **Scope.** Everything here is about one model, Krea-2 (28 single-stream transformer blocks), edited
 > without any training by multiplying the weights of single blocks. It's an investigation into whether
 > controllable "knobs" already exist inside the weights — not a tool to compete with post-production. The
-> exploratory lab notebook that led here is in [`notebook/`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/9fc78764936a65a196154505d637f8ffd104c6ac/notebook) and stays the record of
+> exploratory lab notebook that led here is in [`notebook/`](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/0743f59e7957ab95d488fd03056dd4db9a52cd19/notebook) and stays the record of
 > every test I ran; this repository holds only the results that were confirmed, or that I need here to be
 > honest about what wasn't.
 
-> **New here?** Start from [the story](STORY.md): what I found, told with pictures. This page is the
-> report: abstract, related work, and the table of every claim.
+> **New here?** Start from [the story](STORY.md): what I found, told with pictures. If you just make images
+> and want the practical lessons, read the [FAQ](FAQ.md). Every prompt used is listed in full on
+> [the prompts page](PROMPTS.md). This page is the report: abstract, related work, and the table of every claim.
 
 ## Abstract
 
@@ -54,9 +55,6 @@ four drawn characters, wrote a preset of ten small numbers aiming at *a more Ame
 colours and clean lines*, froze it, and applied it to seven characters at four new seeds. Three of them
 had never been rendered while I was tuning it. Here they are, base above and preset below:
 
-> **Try it yourself.** The same blind choice, 14 pairs, takes two minutes: [take the test](https://aledelpho.github.io/krea2-weight-knobs-results/try-the-test.html). Take it
-> before looking at the pictures below if you can.
-
 ![The three characters never seen while the preset was tuned, large, at one seed: each keeps face, hair and costume, while the preset flattens the colour, removes many wrinkle and hatching lines, simplifies the ornament, and turns the tiefling's patterned jacket plain yellow.](assets/28-portrait-preset/F28.4_portrait_held_out_large.webp)
 
 Someone who had never seen the project, shown each pair side by side without knowing which was which,
@@ -73,8 +71,8 @@ comic, and dark skin turning lighter on the way. Random pushes of the same stren
 nothing about the study saw the same thing I did: it's where the edit points, not how hard it pushes
 ([page 30](30-the-text-encoder.md)).
 
-I started with hand-calibrated presets over the whole stack ([notebook page 01](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9fc78764936a65a196154505d637f8ffd104c6ac/notebook/01-mark-style.md))
-and a notebook full of tests on permutations, rotations and block groups ([notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/9fc78764936a65a196154505d637f8ffd104c6ac/notebook)).
+I started with hand-calibrated presets over the whole stack ([notebook page 01](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0743f59e7957ab95d488fd03056dd4db9a52cd19/notebook/01-mark-style.md))
+and a notebook full of tests on permutations, rotations and block groups ([notebook](https://github.com/aledelpho/diffusion-models-weight-steering-report/tree/0743f59e7957ab95d488fd03056dd4db9a52cd19/notebook)).
 Single blocks turned out to be the more useful unit: they're finer than the tuner's macro-blocks, and some
 of them behave the same way on every prompt I tried. The pages below report what survived confirmation:
 
@@ -123,7 +121,7 @@ in this report; Block Patcher's regex is in fact finer than my per-block vector,
 at a time. Neither tool publishes a map, a dose, or a claim about what any block does: their author
 calls them probing tools. **The contribution here is therefore not the edit but its
 characterisation** — a measured per-block map with calibrated doses, pre-registered confirmations,
-and the failures ([`docs/prior_work_block_scaling_tools.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9fc78764936a65a196154505d637f8ffd104c6ac/docs/prior_work_block_scaling_tools.md)).
+and the failures ([`docs/prior_work_block_scaling_tools.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0743f59e7957ab95d488fd03056dd4db9a52cd19/docs/prior_work_block_scaling_tools.md)).
 
 **Learned per-block scaling.** Calibri calibrates a diffusion transformer with about a hundred
 scaling coefficients — one per block, or one per attention and MLP layer, or one per gate — found by
@@ -277,4 +275,4 @@ page shows its pre-registration, its data and its reservations.
 | [30 · The text encoder — how hard it pushes, and where the picture goes](30-the-text-encoder.md) | What do the same edits do to the model that reads the prompt, and why do the pictures go where they go? |
 
 Structure, sources and the list of notebook pages that enter the report:
-[`docs/report_outline.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9fc78764936a65a196154505d637f8ffd104c6ac/docs/report_outline.md).
+[`docs/report_outline.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0743f59e7957ab95d488fd03056dd4db9a52cd19/docs/report_outline.md).
