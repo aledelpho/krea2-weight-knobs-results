@@ -230,14 +230,23 @@ kind of edit, a multiplier on part of a block, but searched by a reward model ra
 Scaling the output projection of an attention or an MLP, as my edits do among others, is close to
 scaling that layer's output, which is what Calibri tunes. Calibri does not analyse attention against
 MLP or early against late blocks; page 29 does, and finds that they differ.</p>
-<p><strong>Inside the text side.</strong> Knowledge about styles and objects can be localised in the text encoder of a
-text-to-image model and edited there [20]; Diffusion Lens reads the intermediate layers of the text
-encoder by generating images from them [21]; the per-token text embedding of a diffusion model can be
+<p><strong>Inside the text side.</strong> In Stable Diffusion 1.x, causal tracing finds knowledge about styles, objects and facts
+spread through the U-Net but concentrated in one place of the CLIP text encoder, its first self-attention layer at
+the last subject token, where a closed-form edit removes a concept in under a second [31]; the same authors later
+report that causal tracing no longer pinpoints it in SD-XL and DeepFloyd, and localise knowledge in a few U-Net layers
+instead [20]. Editing one MLP matrix of the CLIP text encoder updates what a model draws with FID and CLIP score
+nearly unchanged, while editing the cross-attention of the U-Net for the same purpose sometimes makes the pictures
+incoherent [30]. Diffusion Lens reads the intermediate layers of the text encoder by generating images from them:
+simple and common concepts appear early, relations, colour bindings and rare concepts late, more gradually in a T5
+encoder than in CLIP [21]; the per-token text embedding of a diffusion model can be
 probed and edited token by token [22]. Where the picture reads each word has been studied through
 cross-attention maps in U-Nets [23, 24] and, for dual-stream transformers, through the joint attention
 [25]. Page 30 edits the weights of a language-model text encoder and follows the edit into the
 conditioning and into the attention of a single-stream transformer, where the methods of [25] do not
-apply directly.</p>
+apply directly. Page 30 relates to these findings in three places: text-encoder edits change <em>what</em> is drawn at
+little cost to the surface, as [30] reports for targeted edits; switching off half of the first layer of Qwen3-VL makes
+the picture write the prompt, a first layer that [31] found decisive in CLIP; and the damage of an edit needs many of
+the encoder's intermediate readings at once, closer to the gradual build-up of [21] than to a single locus.</p>
 <p><strong>What the prompt asked for, and whom the model draws.</strong> Checking a picture against its prompt with a list of
 yes/no questions derived from the prompt is the scheme of TIFA [26] and Davidsonian Scene Graph [27], which answer
 them with a vision-language model; page 30 uses the same scheme with human labellers, blind to the edit and the dose.
@@ -278,6 +287,8 @@ SSIM [15] and DINOv2 [16] (page 25).</p>
 <li>Cho, Hu, Garg, Anderson, Krishna, Baldridge, Bansal, Pont-Tuset, Wang. <em>Davidsonian Scene Graph: Improving Reliability in Fine-grained Evaluation for Text-to-Image Generation.</em> ICLR 2024. arXiv:2310.18235</li>
 <li>Luccioni, Akiki, Mitchell, Jernite. <em>Stable Bias: Analyzing Societal Representations in Diffusion Models.</em> NeurIPS 2023 Datasets and Benchmarks. arXiv:2303.11408</li>
 <li>Bianchi, Kalluri, Durmus, Ladhak, Cheng, Nozza, Hashimoto, Jurafsky, Zou, Caliskan. <em>Easily Accessible Text-to-Image Generation Amplifies Demographic Stereotypes at Large Scale.</em> FAccT 2023. arXiv:2211.03759</li>
+<li>Arad, Orgad, Belinkov. <em>ReFACT: Updating Text-to-Image Models by Editing the Text Encoder.</em> NAACL 2024. arXiv:2306.00738</li>
+<li>Basu, Zhao, Morariu, Feizi, Manjunatha. <em>Localizing and Editing Knowledge in Text-to-Image Generative Models.</em> ICLR 2024. arXiv:2310.13730</li>
 </ol>
   </section>
 
@@ -289,9 +300,11 @@ SSIM [15] and DINOv2 [16] (page 25).</p>
 <tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-20-method--the-same-render-twice">The tuner adds nothing of its own at zero, and a render made again days later, in another session and another bench, is the same file pixel for pixel; differences between conditions are therefore the edit and not the pipeline.</a></td><td class="ev">Integrity checks with a pass/fail criterion fixed before the value. Tuner in the graph at zero against no tuner: maximum channel difference 0 on 15 cells (notebook page 00). Before each confirmatory bench of this report, the rows that already existed on older benches were rendered again: 1 of 1 on the wording bench, 26 of 26 on the saturation bench, 1 of 1 on the prompt-family bench, all at maximum difference 0.</td></tr>
 <tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-20-method--the-same-render-twice">With the tuner active, a patch that leaves every weight unchanged gives the same image pixel for pixel: the node and ComfyUI&#x27;s patch path add nothing beyond the multiplication itself.</a></td><td class="ev">Pre-registered (C55), decisive rule fixed before the renders. Block 27&#x27;s eight bf16 matrices multiplied by 1.0001 (no weight changes after rounding; the tuner reported 8 layers patched): maximum channel difference 0 against a baseline re-rendered in the same session, itself identical to the C47 baseline. Block 27 at +0.0001, which changes only its float32 scales, is also identical, as those parameters never reach the model (notebook page 13). One step of bf16 rounding (block 27 at ±0.004) changes 87-88% of the pixels.</td></tr>
 <tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-20-method--why-the-eye-pass-is-declared-open">Hashed filenames do not hide the condition from an observer who knows the edits, so every eye pass in this report is declared as made with the condition known.</a></td><td class="ev">Pre-registered in notebook page 03: four-way forced choice, 17 of 20 and 12 of 20 correct against a 25 percent chance level; 12 of 20 joint hits against a threshold of 5.</td></tr>
+<tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-21-block-map--what-each-block-writes-into-the-stream">Inside the unedited image model, the norm of the image residual stream grows with depth, almost monotonically, from the first block to the last.</a></td><td class="ev">Pre-registered (C48 P3), 23 baseline renders with a read-only residual probe verified pixel-identical (max abs diff 0 on 23 of 23): Spearman correlation between stream norm and block index +0.99 (threshold +0.80), growing from 32.3 at block 0 and 1,364 at block 2 to 16,307 at block 27.</td></tr>
 <tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-22-saturation-knob--direction-and-proportion">Scaling block 23 alone moves the saturation of a Krea-2 picture in one direction, monotonically with the dose and roughly in proportion to it.</a></td><td class="ev">Pre-registered. Chroma falls strictly from -0.45 to +0.30 in 15 of 16 prompt-seed cells (threshold 14); doubling the dose from -0.15 to -0.30 multiplies the gain by 1.76 (window 1.6-2.4). On every older render with a blk23 arm, 83 of 83 move chroma the expected way.</td></tr>
 <tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-22-saturation-knob--against-the-words">Where blk23 reaches the same saturation gain as adding &quot;colorful, vivid highly saturated colors&quot; to the prompt, it leaves the rest of the picture closer to the original than the words do.</a></td><td class="ev">Pre-registered on layout r: 6 of 7 scorable cells, median +0.08. Confirmed afterwards with standard metrics: LPIPS 7 of 7, DINOv2 6 of 7. The comparison is possible in 7 of 16 cells only: in the other 9 the words add more saturation than blk23 at its strongest tested dose.</td></tr>
 <tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-23-prompt-family-presets--coherence-inside-a-family">A preset built from late blocks changes different subjects written in the same style in a common direction, clearly more than it does across styles.</a></td><td class="ev">Pre-registered (C49), all four rules supported. Within-family coherence above between-family coherence on 6 of 6 tested arms, median gap +0.19 (threshold 0.10); median within-family coherence 0.53 (threshold 0.40), about 70 percent of the coherence the same arm has across two seeds of one prompt (0.76). Middle-block arms 0.16 (H3, H4).</td></tr>
+<tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-25-standard-metrics--calibrating-metrics-on-text-encoder-edits">On text-encoder edits, three automatic measures reproduce the eye: VQAScore the loss of character traits, CSD-ViT-L how differently five word orders come out, and DINOv2-large how much an edit changed the picture.</a></td><td class="ev">Pre-registered (C66, docs/prereg_metric_validation.md, n = 657 renders): VQAScore (clip-flant5-xl) achieves pooled within-trait AUC = 0.885 against visual trait-loss annotations (threshold &gt;= 0.80; per-trait AUC 1.000 elf, 0.995 fur, 0.985 antlers, 0.885 pauldron, 0.830 tan, 0.824 eyepatch, 0.686 gauntlet); word-order dispersion across 5 orders (T3, registered on CSD-ViT-L) rho = 0.844 (threshold &gt;= 0.60), DINOv2-large reported at 0.898; change magnitude (T5, registered on DINOv2-large) rho = 0.661 (threshold &gt;= 0.50), CSD-ViT-L reported at 0.654. One observer&#x27;s labels.</td></tr>
 <tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-27-other-edits--the-hatching-axis">Reordering whole blocks inside the checkpoint crosses the hatching strokes when pushed one way and runs them parallel when pushed the other, and the sign decides which.</a></td><td class="ev">Pre-registered in notebook page 06, on 16 prompts sharing nothing with the corpus of the observation: 16 of 16 prompts and 79 of 80 image pairs in the predicted direction, Holm p 9.2e-5 at the permutation floor.</td></tr>
 <tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-27-other-edits--the-subject-grows">A block-reordering edit makes the subject take more of the frame, more so at the higher dose, on styles that did not exist when the prediction was frozen.</a></td><td class="ev">Pre-registered in notebook page 03: geometric mean area ratio 1.234 across 10 new styles, 9 of 10 above 1, Holm-corrected p 0.018 to 0.035. Whether the structure or the size of the edit causes it is open: the control that separates them was not rendered.</td></tr>
 <tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-28-portrait-preset--the-look-carries-over">A preset calibrated by eye on four character portraits changes three characters it never saw in a common direction, about as coherently as it changes the four it was tuned on.</a></td><td class="ev">Pre-registered (C52), preset frozen before any test render. Median coherence across the held-out characters 0.51 (threshold 0.40), against 0.61 on the calibration characters (allowed gap 0.15); the preset agrees with itself across seeds at 0.78 (H1, H2).</td></tr>
@@ -310,6 +323,9 @@ SSIM [15] and DINOv2 [16] (page 25).</p>
 <tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-30-the-text-encoder--what-the-edit-costs-the-character">The first and largest cost of the L06 and L14 text-encoder edits is the character the prompt asks for: its traits fall steadily with dose and go before the style changes.</a></td><td class="ev">Pre-registered (C75), blind yes/no labels, one question at a time. Part A (my labels, 222 pictures of the C74 ladder): retention falls with dose, median Spearman -0.89 over 18 strips (bar -0.50); traits go before the style in 11 of 11 L06/L14 strips (bar 2/3; 8 of 11 with a stricter criterion, exploratory); kappa 0.93 on repeats. Mean retention at d = 1.00: L06 0.52, L14 0.63, L28 0.93. Unchanged without the five traits the unedited model never draws (B0, eight seeds). C74 first noted it in free text. Status changed from open to holds by Alessandro on 2026-10-13.</td></tr>
 <tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-30-the-text-encoder--what-the-edit-costs-the-character">How much a text-encoder edit costs the character depends on its direction, not its size: L06 and L14 cost far more traits than random pushes of the same size, L28 fewer.</a></td><td class="ev">Pre-registered (C75 B1), labelled blind by a second person who knew nothing of the study: retention under random pushes minus the real edit over 36 matched cells, +0.18 pooled (token +0.20, permuted +0.17; bar +0.15). At d = 1.00: L06 real 0.48 against random 0.89 / 0.87; L14 0.63 against 0.95 / 0.94; L28 0.97 against 0.92 / 0.83. Her repeats kappa 0.98; agreement with my labels kappa 0.85.</td></tr>
 <tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-30-the-text-encoder--what-the-edit-costs-the-character">When the L06 or L14 edits change a character&#x27;s skin, it becomes lighter; random pushes of the same size almost never change it. The prompts name no skin tone, so this is a drift toward the model&#x27;s default, not a failure to follow the prompt.</a></td><td class="ev">Pre-registered (C75 T4, part A, my labels): lighter in 52 of 53 skin changes (bar 0.80), lighter majority for 2 of 3 characters (the dwarf&#x27;s skin never changes). Part B2, second labeller: lighter in 14 of 14 changes under real edits; random pushes change the skin in 6 of 108 pictures.</td></tr>
+<tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-30-the-text-encoder--punctuation-break-and-labels">On prompts complex enough to produce errors, the separators between the parts of the prompt make no measurable difference: commas, periods, semicolons, no punctuation at all, or no &quot;Character N&quot; labels.</a></td><td class="ev">Pre-registered (C78), blind labels, two four-character prompts at eight seeds, twelve questions per prompt: every version lands within 0.25 errors of the original (1.50 errors per picture). Repeats kappa 0.954. On the encoder side, the separator changes how alike the tokens of one part are by less than 0.001.</td></tr>
+<tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-30-the-text-encoder--punctuation-break-and-labels">Splitting the prompt with BREAK, so that each part is encoded on its own, makes the picture much worse: the scene falls apart.</a></td><td class="ev">Pre-registered (C78): +5.50 errors per picture against the original, worse in 16 of 16 pairs. All four characters are present in none of the 16 BREAK pictures, and the catfolk is never humanoid.</td></tr>
+<tr><td><span class="pill" style="--c:#0ca30c">Holds</span></td><td><a href="#p-30-the-text-encoder--which-taps-carry-the-damage">The damage of the L06 and L14 edits does not travel through the readings taken right after the edited layer: restricted to them, the edit costs the character almost nothing.</a></td><td class="ev">Pre-registered (C79 rule 2), blind labels with C75&#x27;s questions: trait loss with the push kept only on the next taps is 0.014 against 0.296 on all early and middle taps for L06 (ratio 0.05; rule at most 0.30), 0.000 against 0.128 for L14 (one tap). Repeats kappa 1.00.</td></tr>
 <tr><td><span class="pill" style="--c:#fab219">Ambiguous</span></td><td><a href="#p-21-block-map--what-the-weights-show">How much a block rewrites the picture can be read, in part, from the spectra of its own MLP weights, beyond what its depth explains.</a></td><td class="ev">Pre-registered (C46). Best Spearman rho 0.615 with depth removed, above the Bonferroni threshold 0.57, so the rule says supported; leaving one block out moves it between 0.50 and 0.70, so a single block can undo it. Correlational, 28 blocks, one checkpoint.</td></tr>
 <tr><td><span class="pill" style="--c:#fab219">Ambiguous</span></td><td><a href="#p-24-wording--the-registered-rule">Rewriting a prompt — reordering it, turning it into tags, using synonyms — changes the direction of a block&#x27;s effect no more than changing the seed does, while changing the subject changes it a great deal.</a></td><td class="ev">Pre-registered (C45), verdict inconclusive by its own rule. Writing against seed, median -0.04 (threshold -0.10): met. Writing more alike than subject on 12 of 12 scored arms (threshold 75 percent): met. Writing more alike than a one-object content change on 0 of 12 (threshold 60 percent): not met. By eye, the same change under every writing on all 24 arms.</td></tr>
 <tr><td><span class="pill" style="--c:#fab219">Ambiguous</span></td><td><a href="#p-27-other-edits--a-curiosity-attributes-that-appear">A block permutation makes an attribute the prompt asks for, and the model usually drops, appear in almost every render, while a sign scramble moving the weights exactly as far does nothing.</a></td><td class="ev">Exploratory, scored by me with the condition visible: 19 of 20 seeds against 1 of 20 for the stock model and 1 of 20 for the scramble. One prompt family; the test of generality was designed and never run.</td></tr>
@@ -317,7 +333,10 @@ SSIM [15] and DINOv2 [16] (page 25).</p>
 <tr><td><span class="pill" style="--c:#fab219">Ambiguous</span></td><td><a href="#p-30-the-text-encoder--inside-the-image-model">The strong edits make the five word orders read the same phrases in more different places than the mild edits do, from the first steps of sampling.</a></td><td class="ev">Pre-registered (C69 P1, P2). P1 holds by its rule with a margin of 0.003, and only L12 MLP doubled raises the divergence (+0.060); L06 does not (-0.004) although its pictures scored as high. P2 holds at step 0 but the separation is not kept at steps 3-6.</td></tr>
 <tr><td><span class="pill" style="--c:#fab219">Ambiguous</span></td><td><a href="#p-30-the-text-encoder--random-pushes-of-the-same-size">A random push of the conditioning as large as an edit&#x27;s changes the genre of the picture as often as the edit does.</a></td><td class="ev">Pre-registered (C72 C1-C3, amendment 2: read together). Per-token random pushes switch the genre about as often as the real edits (permuted 11/27, token 10/27, against 14/27; R 0.79 and 0.71, bar 0.5), mostly to anime (15 of 21 switches); the same random vector added to every token switches none (0/27). By the rule fixed before the labels the joint reading is &quot;depends on the form of the push&quot;.</td></tr>
 <tr><td><span class="pill" style="--c:#fab219">Ambiguous</span></td><td><a href="#p-30-the-text-encoder--a-dose-ladder">L28 MLP doubled, which never changes the style, still costs the character&#x27;s traits.</a></td><td class="ev">Pre-registered (C75 T3): mean retention at d = 1.00 minus at 0.10 = -0.07 (bar -0.15: inconclusive). The half-orc loses her orc features from 0.60-0.70; other traits mostly stay; the elf&#x27;s face turns green. Under random pushes of its size the character fares worse (B1).</td></tr>
+<tr><td><span class="pill" style="--c:#fab219">Ambiguous</span></td><td><a href="#p-30-the-text-encoder--which-taps-carry-the-damage">The traits lost under L06 and L14 travel mostly through the early and middle readings of the text encoder (layers 2-26) rather than the late ones (29-35).</a></td><td class="ev">Pre-registered (C79 rule 1): trait loss 0.212 with the push only on the early and middle taps, 0.066 only on the late ones; the difference, +0.146, misses the bar of +0.15, although the early taps cost more in 5 of 6 character-edit pairs (bar 5). Inconclusive. Neither half alone reproduces the full edit, and together they fall short of it: on the same two seeds 0.37 against 0.46 (L06) and 0.16 against 0.38 (L14).</td></tr>
+<tr><td><span class="pill" style="--c:#d03b3b">Overturned</span></td><td><a href="#p-21-block-map--what-each-block-writes-into-the-stream">The middle blocks rewrite the picture more than the late blocks because they write a larger fraction of the residual stream, and blocks 8 or 9 write the largest MLP fraction in the middle of the stack.</a></td><td class="ev">Pre-registered (C48 P1, P2), both refuted. P1: Spearman between relative write ratio and layout stability +0.49 (rule &lt;= -0.50; with depth removed, -0.056) — late blocks 21-27 write the largest fraction of the stream (0.46 to 0.99) yet keep the layout (0.88). P2: among blocks 02-20 the largest MLP relative write sits at block 10 (0.612,jumping the stream from 1,775 to 2,844), not block 8 (0.156) or 9 (0.178).</td></tr>
 <tr><td><span class="pill" style="--c:#d03b3b">Overturned</span></td><td><a href="#p-25-standard-metrics--a-content-embedding-does-not-see-it">The family-coherent change the eye saw on the middle blocks is a change of content that a content embedding, DINOv2, would record.</a></td><td class="ev">Pre-registered (H5): supported if the median within-family coherence of the five middle arms on DINOv2 changes reached the style-feature value plus 0.10 (0.26). It is 0.007, below the style-feature value 0.159: refuted. In DINOv2 space no arm is family-coherent (all W at most 0.06).</td></tr>
+<tr><td><span class="pill" style="--c:#d03b3b">Overturned</span></td><td><a href="#p-25-standard-metrics--calibrating-metrics-on-text-encoder-edits">A dedicated style descriptor (CSD-ViT-L) and zero-shot CLIP genre classification reproduce cross-character style direction coherence, separate style from content changes better than DINOv2, and classify visual genre above 60% accuracy.</a></td><td class="ev">Pre-registered (C66, docs/prereg_metric_validation.md): 4 of 7 calibration rules failed. Cross-character CSD change-vector coherence correlates negatively with eye labels (T1 rho = -0.482, p = 0.0039, AUC = 0.056 vs threshold &gt;= 0.75; T2 leave-one-out AUC = 0.383 vs &gt;= 0.70); style-changed AUC on CSD (0.796) does not exceed DINOv2 (0.815, T4); zero-shot CLIP ViT-L/14 genre accuracy is 0.593 (86/145), 1 image below the 0.600 threshold (T6).</td></tr>
 <tr><td><span class="pill" style="--c:#d03b3b">Overturned</span></td><td><a href="#p-26-what-did-not-work--the-best-doses-by-the-statistic">Pushed to dose 0.500, the macro-block sliders Block_4 and Block_1 move the picture far from the baseline while keeping its line work, and are the best operating points found.</a></td><td class="ev">Published from two statistics, then retracted the next day when the renders were opened: Block_4 + at 0.500 leaves no subject, only a crumpled-stroke texture; Block_1 + at 0.500 is colour confetti. Block_4 + is already broken at 0.350.</td></tr>
 <tr><td><span class="pill" style="--c:#d03b3b">Overturned</span></td><td><a href="#p-26-what-did-not-work--a-measure-with-the-sign-wrong">Structure coherence, a statistic of oriented line work, can rank edits by how much of the drawing they preserve.</a></td><td class="ev">Pre-registered eye veto: 7 agreements in 9 resolved pairs against a threshold of 8 in 12. Both disagreements are one condition, Block_6 + 0.080, which the statistic scores above its baseline and which I and six blind model observers call broken; Block_1 - 0.500 is the same case. The sign is wrong, not the size.</td></tr>
 <tr><td><span class="pill" style="--c:#d03b3b">Overturned</span></td><td><a href="#p-26-what-did-not-work--the-centre-is-not-special">The central macro-blocks give way under a push in a different way from the two at the ends of the stack.</a></td><td class="ev">Pre-registered primary of the centre-push bench: T = +0.053, p = 0.19 over 495 relabellings, with the range guard passed, so a null and not an inconclusive. Block_5 sits in the centre and gives way hardest of all.</td></tr>
@@ -344,6 +363,8 @@ SSIM [15] and DINOv2 [16] (page 25).</p>
 <tr><td><span class="pill" style="--c:#898781">Open</span></td><td><a href="#p-30-the-text-encoder--where-the-switches-go">When a text-encoder edit makes a Western-comic picture change genre, it lands on anime far more often than on anything else, and only edits that double a layer half do it.</a></td><td class="ev">Described, not tested (C70, one observer, seed 3141592, elf in five word orders). Of 100 edited pictures, 50 changed genre: 39 to anime, 11 to cartoon, none to realistic or painting. None of the four edits that zero a layer half changed genre; 13 of the 16 that double one did, in at least one order.</td></tr>
 <tr><td><span class="pill" style="--c:#898781">Open</span></td><td><a href="#p-30-the-text-encoder--random-pushes-of-the-same-size">Where a strong text-encoder edit sends the picture depends on the edit&#x27;s own direction, not only on its size.</a></td><td class="ev">Reported, not tested (C72, 9 labelled cells per edit). L28 MLP doubled, the largest push, keeps the Western comic in 9 of 9 while random pushes of its size switch 16 of 18; L05 MLP doubled goes to anime in 9 of 9 while random pushes of its size switch 1 of 18. On seven portraits (C73, 14 pictures per edit): L06 MLP doubled gives realistic renders in 11 of 14, L14 cartoon in 9 of 14, L26 and L28 keep the Western comic in 14 of 14.</td></tr>
 <tr><td><span class="pill" style="--c:#898781">Open</span></td><td><a href="#p-30-the-text-encoder--what-each-phrase-draws-alone">Single phrases of the prompt carry strong priors of their own, and they match what surfaces under edits: a female dwarf with a beard, a uniform drawn as anime.</a></td><td class="ev">Described (C72 block B, four seeds, one labeller): &quot;female dwarf&quot; and the full dwarf prompt give a bearded woman in 4 of 4; &quot;uniform&quot; an anime girl in 4 of 4; &quot;realistic western comics style&quot; a bearded cowboy comic in 4 of 4; &quot;female antlered elf brawler&quot; anime in 3 of 4; phrases without a person are mostly realistic (78 of 165).</td></tr>
+<tr><td><span class="pill" style="--c:#898781">Open</span></td><td><a href="#p-30-the-text-encoder--layer-0-switched-off">With half of the first layer of the text encoder switched off, the image model writes fragments of the prompt as text instead of drawing it; with the whole layer off it draws coloured noise.</a></td><td class="ev">C77, rule fixed before the renders: text in 4 of 6 new pictures (holds at 5), so open. Counting the C64 elf, attention off writes text in 4 of 4 prompts, MLP off in 2 of 4, the whole layer off in 0 of 4 (exploratory). One seed, my readings, not blind. Encoder side: with half the layer off the conditioning keeps its scale (0.98x and 0.84x) and the identity of the tokens; with the whole layer off its norm is 21.7x on average (62x at L05) and no token is recognisable.</td></tr>
+<tr><td><span class="pill" style="--c:#898781">Open</span></td><td><a href="#p-30-the-text-encoder--inside-the-text-encoder">Inside the text encoder, one layer writes almost all of the internal signal: the MLP of layer 6 takes its size from about 400 to about 13,100, and every later layer up to 33 adds only 1 to 8 % of it.</a></td><td class="ev">Described, no pre-registration: a read-only probe of all 36 layers on 16 prompts. Layer 6&#x27;s MLP writes 33.8 times the size of the signal it receives; layers 7-33 write 0.012-0.080 times; the last two reshape it (the norm falls to 12,768 and 6,606). L06 doubled is also the edit that turned seven portraits into realistic renders in 11 of 14 pictures (C73).</td></tr>
       </tbody>
     </table>
   </section>
@@ -535,7 +556,7 @@ analysis:
 </ul>
 </section>
 <section id="p-21-block-map">
-<p class="status"><span class="pill" style="--c:#898781">Open</span><span class="corpus">1583 renders · 26 prompts · 4 seeds · 2026-10-05</span></p>
+<p class="status"><span class="pill" style="--c:#898781">Open</span><span class="corpus">1606 renders · 26 prompts · 4 seeds · 2026-10-17</span></p>
 <h1 id="p-21-block-map--a-map-of-the-28-blocks">A map of the 28 blocks</h1>
 <blockquote>
 <p><strong>The direction I'm chasing.</strong> If knobs live in the weights, they should live in particular
@@ -546,8 +567,11 @@ that behaves differently from the others and nothing that comes back on a second
 prompts.</p>
 <p><strong>Where we are.</strong> The two ends behave like controls on the surface of the picture; the middle
 rewrites what is depicted. A few groups of neighbouring blocks push the same way on a second
-set of prompts. This page is a map, not a test: only the weights claim was pre-registered,
-and it passed by a thin margin.</p>
+set of prompts. Only the weights and residual-stream tests were pre-registered: the weights
+claim passed by a thin margin, the residual stream grows 505-fold from input to output, and
+the prediction that late blocks keep the layout because they write a smaller fraction of the
+stream was refuted — they write the largest fraction — while block 10 produces the middle-stack
+MLP write spike.</p>
 </blockquote>
 <h2 id="p-21-block-map--in-two-minutes">In two minutes</h2>
 <p>The atlas behind this page is three benches — 12 prompts in eight styles, 6 prompts at two
@@ -567,11 +591,15 @@ changes identity.</p>
 and colour, grain or sharpness move. The middle is where single blocks change content — viewpoint,
 identity, medium — and are least predictable. A few groups of neighbouring blocks push in the
 same direction on a second set of prompts. The split between stable and unstable blocks is
-partly visible in the weights themselves, but that result is marginal.</p>
+partly visible in the weights themselves, though that result is marginal. A read-only probe on the
+23 baselines confirmed that the image residual stream grows with depth (Spearman
++0.99), but refuted the idea that late blocks keep the layout because they write a smaller
+fraction of that stream: blocks 21–27 write 46% to 99% of the stream, while in the middle of the stack block 10 — the third member of the 08–10 group —
+produces a 0.61 MLP write spike that jumps the stream norm from 1,775 to 2,844.</p>
 <h2 id="p-21-block-map--why-i-might-be-wrong">Why I might be wrong</h2>
 <ul>
 <li><strong>This is a map, drawn after looking.</strong> The bands are my reading of the sheets; only the
-  weights test (C46) was frozen before the data.</li>
+  weights test (C46) and the residual-stream probe (C48) were frozen before the data.</li>
 <li><strong>The doses differ by block and by bench.</strong> A block that looks stable may have been pushed less.</li>
 <li><strong>64×80 sees layout and colour, not grain.</strong> The groups say nothing about blocks 00, 01, 21, 26
   and 27, whose effects are fine texture.</li>
@@ -719,6 +747,185 @@ in their MLP gate in the stack (σ₁ 113 and 130 against 34–97 elsewhere). Bl
 through almost one direction (stable rank of the attention output 26 and 13 against 100–260
 elsewhere), which is one mechanical reading of a knob. Block 23, the saturation knob of page 22,
 does not stand out on any of the 40 values.</p>
+<h3 id="p-21-block-map--what-each-block-writes-into-the-stream">What each block writes into the stream</h3>
+<p>Weights alone do not show how much a block actually adds to the running image signal during
+sampling. A pre-registered follow-up (C48, <code>docs/prereg_residual_probe.md</code>) re-rendered the 23
+baselines of the styles (12), v3 (6) and v4 (5) benches with a read-only forward hook on each of
+the 28 <code>SingleStreamBlock</code>s (<code>tools/comfy_residual_probe</code>), recording on the image tokens at each
+of the 9 steps the norm of the incoming stream, the norm of the block's total write, the gated
+attention and MLP writes separately, and the cosine between the write and the stream
+(<code>data/residual_probe_raw.csv</code>, 5,796 rows; <code>data/residual_probe_blocks.csv</code>). All 23 renders came
+out pixel-identical to the originals (max absolute difference 0).</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>test (pre-registered, <code>data/residual_probe_test.csv</code>)</th>
+<th>value</th>
+<th>rule</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1 — Spearman(relative write ratio, layout stability), 28 blocks</td>
+<td>+0.49</td>
+<td>≤ −0.50 supported, &gt; −0.30 refuted</td>
+<td><strong>refuted</strong></td>
+</tr>
+<tr>
+<td>P1b — Spearman(relative write ratio, layout stability), depth removed</td>
+<td>−0.056</td>
+<td>reported</td>
+<td>—</td>
+</tr>
+<tr>
+<td>P2 — block with largest MLP relative write among blocks 02–20</td>
+<td>block 10 (0.612)</td>
+<td>block 08 or 09</td>
+<td><strong>refuted</strong></td>
+</tr>
+<tr>
+<td>P3 — Spearman(stream norm, block index)</td>
+<td><strong>+0.99</strong></td>
+<td>≥ +0.80</td>
+<td><strong>supported</strong></td>
+</tr>
+</tbody>
+</table></div>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>blocks / landmark (<code>data/residual_probe_blocks.csv</code>)</th>
+<th style="text-align: right;">stream norm</th>
+<th style="text-align: right;">write norm</th>
+<th style="text-align: right;">relative write <code>ratio</code></th>
+<th style="text-align: right;"><code>attn_ratio</code></th>
+<th style="text-align: right;"><code>mlp_ratio</code></th>
+<th style="text-align: right;"><code>cos(write, stream)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>block 00 (initialisation)</td>
+<td style="text-align: right;">32.3</td>
+<td style="text-align: right;">1,420.6</td>
+<td style="text-align: right;"><strong>44.32</strong></td>
+<td style="text-align: right;">4.274</td>
+<td style="text-align: right;">42.860</td>
+<td style="text-align: right;">+0.264</td>
+</tr>
+<tr>
+<td>block 01</td>
+<td style="text-align: right;">1,429.4</td>
+<td style="text-align: right;">298.8</td>
+<td style="text-align: right;">0.210</td>
+<td style="text-align: right;">0.194</td>
+<td style="text-align: right;">0.041</td>
+<td style="text-align: right;">−0.305</td>
+</tr>
+<tr>
+<td>blocks 02–07 (early Style)</td>
+<td style="text-align: right;">1,358.8–1,490.8</td>
+<td style="text-align: right;">80.6–209.3</td>
+<td style="text-align: right;">0.060–0.140</td>
+<td style="text-align: right;">0.040–0.085</td>
+<td style="text-align: right;">0.040–0.113</td>
+<td style="text-align: right;">−0.095 to +0.318</td>
+</tr>
+<tr>
+<td>block 08</td>
+<td style="text-align: right;">1,576.2</td>
+<td style="text-align: right;">266.6</td>
+<td style="text-align: right;">0.167</td>
+<td style="text-align: right;">0.102</td>
+<td style="text-align: right;">0.156</td>
+<td style="text-align: right;">+0.319</td>
+</tr>
+<tr>
+<td>block 09</td>
+<td style="text-align: right;">1,695.3</td>
+<td style="text-align: right;">271.0</td>
+<td style="text-align: right;">0.158</td>
+<td style="text-align: right;">0.137</td>
+<td style="text-align: right;">0.178</td>
+<td style="text-align: right;">+0.168</td>
+</tr>
+<tr>
+<td><strong>block 10 (middle spike)</strong></td>
+<td style="text-align: right;"><strong>1,774.7</strong></td>
+<td style="text-align: right;"><strong>1,372.7</strong></td>
+<td style="text-align: right;"><strong>0.772</strong></td>
+<td style="text-align: right;"><strong>0.219</strong></td>
+<td style="text-align: right;"><strong>0.612</strong></td>
+<td style="text-align: right;"><strong>+0.623</strong></td>
+</tr>
+<tr>
+<td>blocks 11–17</td>
+<td style="text-align: right;">2,844.3–4,409.7</td>
+<td style="text-align: right;">536.6–806.2</td>
+<td style="text-align: right;">0.174–0.198</td>
+<td style="text-align: right;">0.117–0.149</td>
+<td style="text-align: right;">0.132–0.189</td>
+<td style="text-align: right;">+0.077 to +0.479</td>
+</tr>
+<tr>
+<td>blocks 18–20</td>
+<td style="text-align: right;">4,532.2–4,857.7</td>
+<td style="text-align: right;">1,221.6–1,760.1</td>
+<td style="text-align: right;">0.269–0.382</td>
+<td style="text-align: right;">0.200–0.318</td>
+<td style="text-align: right;">0.214–0.357</td>
+<td style="text-align: right;">−0.302 to +0.204</td>
+</tr>
+<tr>
+<td>blocks 21–25</td>
+<td style="text-align: right;">5,218.3–9,083.5</td>
+<td style="text-align: right;">2,683.4–5,840.6</td>
+<td style="text-align: right;">0.461–0.645</td>
+<td style="text-align: right;">0.263–0.499</td>
+<td style="text-align: right;">0.415–0.513</td>
+<td style="text-align: right;">−0.174 to +0.195</td>
+</tr>
+<tr>
+<td>block 26</td>
+<td style="text-align: right;">10,738.7</td>
+<td style="text-align: right;">9,374.5</td>
+<td style="text-align: right;"><strong>0.880</strong></td>
+<td style="text-align: right;">0.496</td>
+<td style="text-align: right;">0.608</td>
+<td style="text-align: right;">+0.315</td>
+</tr>
+<tr>
+<td>block 27</td>
+<td style="text-align: right;">16,306.9</td>
+<td style="text-align: right;">16,210.2</td>
+<td style="text-align: right;"><strong>0.993</strong></td>
+<td style="text-align: right;">0.427</td>
+<td style="text-align: right;">0.761</td>
+<td style="text-align: right;">+0.225</td>
+</tr>
+</tbody>
+</table></div>
+<p>Three things emerge from the measurements:</p>
+<ol>
+<li><strong>The stream norm grows 505× across the stack (P3 supported, ρ = +0.99).</strong> Block 00 enters at
+   32.3 and its MLP writes 1,383.8 (<code>mlp_ratio = 42.86</code>), establishing the working scale of the
+   stream (1,429.4 at block 01). From block 02 (1,364.0) to block 27 (16,306.9) the norm rises
+   almost monotonically.</li>
+<li><strong>Late blocks keep the layout despite writing the largest fraction of the stream (P1 refuted,
+   ρ = +0.49; depth-removed −0.056).</strong> P1 assumed that blocks 21–27 keep the composition because
+   their writes are small relative to a large stream. Instead, <code>ratio</code> is largest in blocks 21–27
+   (0.46 to 0.99) and smallest in blocks 02–09 (0.06 to 0.17). So write size does not explain why
+   late blocks keep the layout. A reading consistent with this page, not tested: by block 21 the
+   composition is already fixed and the large late writes act on the surface; blocks 26
+   (<code>ratio = 0.88</code>) and 27 (<code>ratio = 0.99</code>) are also the first to break the surface when pushed.</li>
+<li><strong>Block 10 is the middle-stack MLP write spike (<code>ratio = 0.772</code>, <code>mlp_ratio = 0.612</code>).</strong> P2
+   predicted that among blocks 02–20 the largest <code>mlp_ratio</code> would sit at block 08 or 09, where the
+   MLP gate's top singular value peaks. Instead, blocks 08 and 09 write 0.156 and 0.178, and
+   <strong>block 10</strong> — the third member of the <code>08–10</code> positive group — writes 0.612 (<code>cos = +0.623</code>
+   with the stream), jumping the stream norm from 1,774.7 to 2,844.3 in a single step before blocks
+   11–17 return to 0.17–0.20.</li>
+</ol>
 <h3 id="p-21-block-map--how-far-each-block-can-be-pushed">How far each block can be pushed</h3>
 <p>At the same dose, blocks do not break at the same point. I labelled every edit of the equal-dose
 bench by the artefacts I could see, from OK to BROKEN
@@ -984,7 +1191,7 @@ sampling:
   vae: qwen_image_vae.safetensors
   text_encoder: qwen3vl_4b_bf16.safetensors (CLIPLoader type krea2)
 tuner:
-  node: ArthemyKrea2ModelTuner, after ArthemyKrea2ResetPatcher
+  node: ArthemyKrea2ModelTuner, after ArthemyKrea2ResetPatcher (and ArthemyResidualProbe on the 23 baselines of C48)
   version: not recorded — the tuner is a separate repository
   mode: Real Value, driven by a 34-slot vectors_override (one block at a time)
 prompts:
@@ -998,8 +1205,11 @@ conditions:
   - name: single block, positive dose, each of 28 blocks
     dose: calibrated by eye per block and per bench
     measured_D: not measured
+  - name: C48 residual-stream probe on the 23 unedited baselines
+    dose: 0.000
+    measured_D: 0.000
 outputs:
-  folders: [benchmark_single_blocks_styles, benchmark_single_blocks_v3, benchmark_single_blocks_v4, benchmark_single_blocks_atlas]
+  folders: [benchmark_single_blocks_styles, benchmark_single_blocks_v3, benchmark_single_blocks_v4, benchmark_single_blocks_atlas, benchmark_residual_probe]
   manifest: no single committed manifest for all three benches; data/block_colour_layout.csv lists every measured image
 analysis:
   scripts:
@@ -1007,16 +1217,18 @@ analysis:
     - experiments/block_effect_overlap.py       # 29853a9f70e6f86987c119d0f74112517cf56e92a3754cb6cf212ca32c4ae188
     - experiments/block_weight_structure.py     # 1df6cc4b4cedf27e99efba52f19cf7318b7a5572f228e53abcd17e900e405645
     - experiments/block_change_breadth.py       # 564ed1578c1c6db997e489241d3cb1991f7ef5859de50c153e15b218bec575b1
-  produces: data/block_colour_layout.csv, data/block_effect_overlap_mean.csv, data/block_weight_structure.csv, data/block_weight_structure_test.csv, data/block_change_breadth.csv
+    - experiments/analyze_residual_probe.py
+  produces: data/block_colour_layout.csv, data/block_effect_overlap_mean.csv, data/block_weight_structure.csv, data/block_weight_structure_test.csv, data/block_change_breadth.csv, data/residual_probe_raw.csv, data/residual_probe_blocks.csv, data/residual_probe_test.csv
 </code></pre>
 <h2 id="p-21-block-map--provenance">Provenance</h2>
 <ul>
-<li><strong>Renders.</strong> benchmark_single_blocks_styles (684), benchmark_single_blocks_v3 (396), benchmark_single_blocks_v4 (332), benchmark_single_blocks_atlas (171).</li>
-<li><strong>Pre-registration (weights only):</strong> <code>docs/prereg_block_weight_structure.md</code>, committed before
-  any weight was read.</li>
+<li><strong>Renders.</strong> benchmark_single_blocks_styles (684), benchmark_single_blocks_v3 (396), benchmark_single_blocks_v4 (332), benchmark_single_blocks_atlas (171), benchmark_residual_probe (23).</li>
+<li><strong>Pre-registrations:</strong> <code>docs/prereg_block_weight_structure.md</code> (weights, C46) and <code>docs/prereg_residual_probe.md</code> (residual-stream writes, C48), both committed before their measurements were read.</li>
 <li><strong>Result documents:</strong> <code>docs/block_groups_and_prompt_order.md</code>,
-  <code>docs/single_blocks_exploration_synthesis.md</code>, <code>docs/block_weight_structure_result.md</code>.</li>
+  <code>docs/single_blocks_exploration_synthesis.md</code>, <code>docs/block_weight_structure_result.md</code>,
+  <code>docs/residual_probe_result.md</code>.</li>
 <li><strong>Observations:</strong> <code>data/single_blocks_v4_definitions_alessandro.md</code> (the original, in Italian, of the guide to each block).</li>
+<li><strong>Probes:</strong> <code>tools/comfy_residual_probe</code> (<code>ArthemyResidualProbe</code>, read-only forward hooks on the 28 <code>SingleStreamBlock</code>s, checked pixel-identical on all 23 renders).</li>
 </ul>
 </section>
 <section id="p-22-saturation-knob">
@@ -1689,24 +1901,31 @@ analysis:
 </ul>
 </section>
 <section id="p-25-standard-metrics">
-<p class="status"><span class="pill" style="--c:#d03b3b">Overturned</span><span class="corpus">962 renders · 35 prompts · 7 seeds · pre-registered · 2026-10-05</span></p>
+<p class="status"><span class="pill" style="--c:#d03b3b">Overturned</span><span class="corpus">1619 renders · 46 prompts · 10 seeds · pre-registered · 2026-10-17</span></p>
 <h1 id="p-25-standard-metrics--what-the-standard-metrics-see-and-what-they-miss">What the standard metrics see, and what they miss</h1>
 <blockquote>
 <p><strong>The direction I'm chasing.</strong> The results on the other pages rest on my eye and on statistics
 written for this project. A reader will ask what the usual metrics say: image quality, prompt
-adherence, perceptual distance, content similarity. I wanted them on the same images, decided
-before they were computed.</p>
-<p><strong>What would kill it.</strong> Standard metrics that contradict the published verdicts — or that see,
-without my eye, what only my eye had seen.</p>
-<p><strong>Where we are.</strong> They confirm the saturation knob against the words and put a price on each
-preset. They do not see what the middle blocks do across a family: the one prediction I made
-about them failed.</p>
+adherence, perceptual distance, content similarity, style descriptors, and visual question
+answering. I wanted them on the same images, decided before they were computed.</p>
+<p><strong>What would kill it.</strong> Standard metrics that contradict the published verdicts — or that fail to
+reproduce the eye's calls when calibrated directly against the visual notes.</p>
+<p><strong>Where we are.</strong> On the diffusion transformer (962 renders), they confirm the saturation knob
+against the words and put a price on each preset, but DINOv2 misses cross-prompt family coherence
+(<code>W = 0.007</code>). On the text encoder (657 renders, C66), 3 of 7 calibration rules pass: <code>VQAScore</code>
+(<code>clip-flant5-xl</code>) catches lost character traits (<code>pooled AUC = 0.885</code>), and both <code>DINOv2-large</code>
+and <code>CSD-ViT-L</code> track word-order dispersion (<code>ρ = 0.898</code> and <code>0.844</code>) and overall change magnitude
+(<code>ρ = 0.661</code> and <code>0.654</code>). All 4 rules that require separating style from content or measuring
+cross-character direction coherence fail (<code>T1</code>, <code>T2</code>, <code>T4</code>, <code>T6</code>).</p>
 </blockquote>
 <h2 id="p-25-standard-metrics--in-two-minutes">In two minutes</h2>
-<p>No new renders: BRISQUE and CLIP-IQA (quality without a reference), CLIPScore (adherence to the
-prompt), LPIPS, DISTS and SSIM (distance from the baseline), and DINOv2 cosine (same content as
-the baseline) were computed on every image of the three confirmatory benches — wording,
-saturation, prompt family — under a plan written before any of them was run.</p>
+<p>No new renders: first, BRISQUE and CLIP-IQA (quality without a reference), CLIPScore (adherence to
+the prompt), LPIPS, DISTS and SSIM (distance from the baseline), and DINOv2 cosine (same content as
+the baseline) were computed on every image of the three confirmatory DiT benches (962 renders) —
+wording, saturation, prompt family. Second, in C66 (<code>docs/prereg_metric_validation.md</code>), contrastively
+trained style descriptors (<code>CSD-ViT-L</code>), <code>DINOv2-large</code>, zero-shot <code>CLIP ViT-L/14</code> genre
+classification, and <code>VQAScore</code> (<code>clip-flant5-xl</code>) were tested against the pre-existing visual reading
+notes across 657 text-encoder renders (<code>C64</code>, <code>C65</code>, <code>C72</code>, <code>C74</code>, <code>C75</code>).</p>
 <p><img alt="Middle blocks change the content most (DINOv2 0.87-0.88) at no BRISQUE cost, while the late blocks and the combined preset change less and cost up to +9.6 BRISQUE." src="assets/25-standard-metrics/F25.1_depth_vs_cost.webp" /></p>
 <p>Read the figure as two corners. Bottom right: the middle blocks, which move the content most and
 leave BRISQUE where it was. Top left: the late blocks and the combined preset, which keep the
@@ -1715,9 +1934,13 @@ content and raise BRISQUE.</p>
 <p>On the saturation knob the standard metrics agree with the published verdict: at the same colour
 gain, block 23 stays closer to the original than the words "colorful" (LPIPS 7 of 7, DINOv2 6 of
 7). On the prompt-family presets they put a price on each arm: the late blocks and the combo cost
-up to +9.6 BRISQUE, the middle blocks nothing measurable, while changing the content most. The
-pre-registered prediction that DINOv2 would see the middle blocks' family-coherent change is
-refuted: it is an observation by eye that no metric here reproduces.</p>
+up to +9.6 BRISQUE, the middle blocks nothing measurable, while changing the content most. Across
+both the DiT and the text encoder, embedding cosine of <em>difference vectors</em> across different
+subjects (<code>H5</code> on DINOv2, <code>T1</code> and <code>T2</code> on CSD-ViT-L) fails to reproduce what the eye calls "moving
+in the same stylistic direction." By contrast, within-character distance from baseline (<code>T3</code>
+word-order dispersion, <code>T5</code> change magnitude) and targeted visual question answering (<code>T7</code>
+<code>VQAScore</code> for specific character traits, <code>AUC = 0.885</code>) pass their pre-registered thresholds and
+are cleared for automated evaluation.</p>
 <h2 id="p-25-standard-metrics--why-i-might-be-wrong">Why I might be wrong</h2>
 <ul>
 <li><strong>No-reference quality metrics miss what the eye calls noise.</strong> blk26 +0.15 was judged not
@@ -1729,7 +1952,11 @@ refuted: it is an observation by eye that no metric here reproduces.</p>
 <li><strong>CLIPScore on the saturation bench is not comparable across conditions.</strong> It was computed
   against each image's own prompt, which for the word conditions includes the added words — a
   defect of the plan, recorded and not interpreted.</li>
-<li><strong>DINOv2 is one content embedding.</strong> Another may see what this one does not.</li>
+<li><strong>Difference-vector cosine confounds magnitude with cross-subject coherence.</strong> In <code>T1</code> (<code>ρ = -0.482</code>),
+  an edit that leaves all 7 characters in their original comic style produces small, noisy residual
+  vectors (low pairwise cosine), whereas a destructive edit (<code>L06</code>, <code>L12</code>) pushes every image far
+  from its baseline along a shared collapse component even when characters land in different visual
+  genres.</li>
 </ul>
 <h2 id="p-25-standard-metrics--the-data">The data</h2>
 <h3 id="p-25-standard-metrics--the-saturation-knob-again">The saturation knob, again</h3>
@@ -1865,6 +2092,167 @@ points one way for a fox and another way for a car in an embedding built around 
 <h3 id="p-25-standard-metrics--wording-in-dinov2-space">Wording, in DINOv2 space</h3>
 <p>A_content_small 0.29 &gt; A_seed 0.22 &gt; A_writing 0.16 ≫ A_subject 0.02: the same ordering as the
 style features on <a href="#p-24-wording">page 24</a>. The subject dominates; rewriting behaves like the seed.</p>
+<h3 id="p-25-standard-metrics--calibrating-metrics-on-text-encoder-edits">Calibrating metrics on text-encoder edits</h3>
+<p>Before using any automatic metric to judge text-encoder experiments (<a href="#p-30-the-text-encoder">page 30</a>),
+C66 (<code>docs/prereg_metric_validation.md</code>, <code>docs/metric_validation_result.md</code>) tested four candidate
+backbones — <code>CSD-ViT-L</code> (contrastive style descriptor, <code>768</code>-d), <code>DINOv2-large</code> (<code>1024</code>-d),
+zero-shot <code>CLIP ViT-L/14</code> (<code>openai</code>), and <code>VQAScore</code> (<code>clip-flant5-xl</code>) — against the human visual
+reading tables across 657 already-rendered text-encoder images (<code>data/metric_val_images.csv</code>,
+<code>data/metric_val_tests.csv</code>).</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>test</th>
+<th>measure</th>
+<th style="text-align: right;">n</th>
+<th>value</th>
+<th>rule for <em>validated</em></th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T1</strong></td>
+<td>Per sheet, median cosine between the 7 characters' CSD change vectors vs "same direction" (<code>yes</code> / <code>partly</code> / <code>no</code>)</td>
+<td style="text-align: right;">34</td>
+<td><code>ρ = -0.482</code> (<code>p = 0.0039</code>), <code>AUC = 0.056</code></td>
+<td><code>ρ ≥ 0.40</code> and <code>AUC ≥ 0.75</code></td>
+<td><strong>not validated</strong></td>
+</tr>
+<tr>
+<td><strong>T2</strong></td>
+<td>Per character, cosine of its CSD change with the mean change of the other six vs <code>follows</code> / <code>another way</code></td>
+<td style="text-align: right;">238</td>
+<td><code>AUC = 0.383</code></td>
+<td><code>AUC ≥ 0.70</code></td>
+<td><strong>not validated</strong></td>
+</tr>
+<tr>
+<td><strong>T3 (CSD)</strong></td>
+<td>Per edit, CSD dispersion across the 5 word orders (minus originals) vs 1–5 visual scores</td>
+<td style="text-align: right;">20</td>
+<td><code>ρ = 0.844</code> (<code>p = 0.0</code>)</td>
+<td><code>ρ ≥ 0.60</code></td>
+<td><strong>validated</strong></td>
+</tr>
+<tr>
+<td><strong>T3 (DINOv2)</strong></td>
+<td>Per edit, DINOv2 dispersion across the 5 word orders vs 1–5 visual scores</td>
+<td style="text-align: right;">20</td>
+<td><code>ρ = 0.898</code> (<code>p = 0.0</code>)</td>
+<td>reported</td>
+<td><strong>reported</strong></td>
+</tr>
+<tr>
+<td><strong>T4</strong></td>
+<td>CSD distance to baseline, style <code>changed</code> vs <code>unchanged</code> (elf, 55 vs 97)</td>
+<td style="text-align: right;">152</td>
+<td><code>AUC(CSD) = 0.796</code>, <code>AUC(DINOv2) = 0.815</code></td>
+<td><code>AUC(CSD) ≥ 0.70</code> and <code>&gt; AUC(DINOv2)</code></td>
+<td><strong>not validated</strong></td>
+</tr>
+<tr>
+<td><strong>T5</strong></td>
+<td>DINOv2 distance to baseline vs ordinal change rating (<code>none</code> … <code>strong</code>, elf)</td>
+<td style="text-align: right;">150</td>
+<td><code>ρ = 0.661</code> (<code>p = 0.0</code>, <code>ρ_CSD = 0.654</code>)</td>
+<td><code>ρ ≥ 0.50</code></td>
+<td><strong>validated</strong></td>
+</tr>
+<tr>
+<td><strong>T6</strong></td>
+<td>CLIP ViT-L/14 zero-shot top-1 genre vs single genre named in the reading notes</td>
+<td style="text-align: right;">145</td>
+<td><code>accuracy = 0.593</code>, <code>majority = 0.317</code></td>
+<td><code>accuracy ≥ 0.60</code> and <code>≥ 0.467</code></td>
+<td><strong>not validated</strong></td>
+</tr>
+<tr>
+<td><strong>T7</strong></td>
+<td><code>1 - VQAScore</code> (<code>clip-flant5-xl</code>) of the trait question, trait lost vs retained (elf)</td>
+<td style="text-align: right;">153</td>
+<td><code>pooled AUC = 0.885</code> (78 lost)</td>
+<td><code>pooled AUC ≥ 0.80</code></td>
+<td><strong>validated</strong></td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td>CSD discrimination gap: mean cosine within the same named genre minus across genres</td>
+<td style="text-align: right;">145</td>
+<td><code>gap = +0.2070</code></td>
+<td>reported</td>
+<td><strong>reported</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Across the seven character traits annotated on the 153 elf images (<code>data/metric_val_vqa.csv</code>),
+<code>VQAScore</code> (<code>clip-flant5-xl</code>) separates trait loss from retention with a pooled within-trait AUC of
+<strong><code>0.885</code></strong> (<code>data/metric_val_tests.csv</code>):</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>trait</th>
+<th>question (<code>clip-flant5-xl</code>)</th>
+<th style="text-align: right;">lost (<code>n</code>)</th>
+<th style="text-align: right;">within-trait AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>elf</code></td>
+<td><code>"pointed elf ears"</code></td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;"><code>1.000</code></td>
+</tr>
+<tr>
+<td><code>fur</code></td>
+<td><code>"a fur collar"</code></td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;"><code>0.995</code></td>
+</tr>
+<tr>
+<td><code>antlers</code></td>
+<td><code>"a small pair of pale antlers"</code></td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;"><code>0.985</code></td>
+</tr>
+<tr>
+<td><code>pauldron</code></td>
+<td><code>"a gold wood-textured pauldron"</code></td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;"><code>0.885</code></td>
+</tr>
+<tr>
+<td><code>tan</code></td>
+<td><code>"tan sun-kissed skin"</code></td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;"><code>0.830</code></td>
+</tr>
+<tr>
+<td><code>eyepatch</code></td>
+<td><code>"an eyepatch over one eye"</code></td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;"><code>0.824</code></td>
+</tr>
+<tr>
+<td><code>gauntlet</code></td>
+<td><code>"a heavy silver gauntlet"</code></td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;"><code>0.686</code></td>
+</tr>
+<tr>
+<td><strong>pooled</strong></td>
+<td>—</td>
+<td style="text-align: right;"><strong>78</strong></td>
+<td style="text-align: right;"><strong><code>0.885</code></strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><code>T4</code> failed although <code>CSD-ViT-L</code> reaches <code>AUC = 0.796</code> on style changes, because <code>DINOv2-large</code>
+reaches <code>0.815</code>. A likely reason, not tested: text-encoder edits that shift the style also change the
+character's pose and accessories (<a href="#p-30-the-text-encoder">page 30</a>), which a content embedding sees. And in
+<code>T6</code>, zero-shot <code>CLIP ViT-L/14</code> matched 86 of 145 single-genre notes (<code>0.593</code>, vs <code>0.317</code> majority
+baseline), missing the pre-registered <code>0.600</code> threshold (<code>87/145</code>) by a single image (<code>data/metric_val_genre.csv</code>).</p>
 <h3 id="p-25-standard-metrics--reproducing-this">Reproducing this</h3>
 <pre><code class="language-yaml">model:
   checkpoint: krea2_turbo_bf16.safetensors
@@ -1884,28 +2272,29 @@ tuner:
   version: not recorded — the tuner is a separate repository
   mode: Real Value, driven by a 34-slot vectors_override
 prompts:
-  files: [data/prompt_writing_plan.csv, data/blk23_colorful_plan.csv, data/prompt_family_plan.csv]
-seeds: [2718281, 3141592, 1618033, 4669201, 5772156, 1414213, 1234567]
+  files: [data/prompt_writing_plan.csv, data/blk23_colorful_plan.csv, data/prompt_family_plan.csv, data/metric_val_images.csv]
+seeds: [2718281, 3141592, 1618033, 4669201, 5772156, 1414213, 1234567, 42, 43, 44]
 conditions:
-  - name: every condition of the three benches, as listed on pages 22, 23 and 24
-    measured_D: not measured; the doses are per-block gains, not calibrated displacements
+  - name: every condition of the three DiT benches and five TE benches, as listed on pages 22, 23, 24 and 30
+    measured_D: not measured; the doses are per-block or per-layer gains, not calibrated displacements
 outputs:
-  folders: [benchmark_prompt_writing, benchmark_blk23_colorful, benchmark_prompt_family]
-  manifest: data/standard_metrics_c45.csv, data/standard_metrics_c47.csv, data/standard_metrics_c49.csv
+  folders: [benchmark_prompt_writing, benchmark_blk23_colorful, benchmark_prompt_family, benchmark_te_sweep, benchmark_te_pilot_2b, benchmark_te_word_order, benchmark_te_mlp_Continue, benchmark_te_surgical]
+  manifest: data/standard_metrics_c45.csv, data/standard_metrics_c47.csv, data/standard_metrics_c49.csv, data/metric_val_images.csv
 analysis:
   scripts:
     - experiments/standard_metrics.py           # 744fc3854a7b6a6be4b3ca95cacd54f2337d3ba3521119eb82d0936a3195c245 (GPU, piq + open_clip + DINOv2 ViT-B/14)
     - experiments/analyze_standard_metrics.py   # eb36aa06bca4a9db9a4537cb3a30e34a29975ed4b9c3af13d587322bfa83d08c
-  produces: data/standard_metrics_summary.csv
+    - experiments/metric_validation.py          # ddeecc8e508264df1fde9832d67876b16a3a6c06c9d8ad8d0a35d64aba48d3ad (CSD-ViT-L + DINOv2-large + CLIP ViT-L/14 + VQAScore clip-flant5-xl)
+  produces: data/standard_metrics_summary.csv, data/metric_val_tests.csv, data/metric_val_vqa.csv, data/metric_val_genre.csv
 </code></pre>
 <h2 id="p-25-standard-metrics--provenance">Provenance</h2>
 <ul>
-<li><strong>Renders.</strong> benchmark_prompt_writing (401), benchmark_blk23_colorful (128), benchmark_prompt_family (433).</li>
-<li><strong>Pre-registration:</strong> <code>docs/prereg_standard_metrics.md</code>, written before any of the metrics was
-  computed on these images; H5's wording was fixed in it before the run.</li>
-<li><strong>Result document:</strong> <code>docs/standard_metrics_result.md</code>.</li>
+<li><strong>Renders.</strong> benchmark_prompt_writing (401), benchmark_blk23_colorful (128), benchmark_prompt_family (433), metric_validation_te_corpus (657).</li>
+<li><strong>Pre-registration:</strong> <code>docs/prereg_standard_metrics.md</code> and <code>docs/prereg_metric_validation.md</code>, written before any of the metrics was computed on these images.</li>
+<li><strong>Result document:</strong> <code>docs/standard_metrics_result.md</code> and <code>docs/metric_validation_result.md</code>.</li>
 <li><strong>Data:</strong> <code>data/standard_metrics_c45.csv</code>, <code>data/standard_metrics_c47.csv</code>,
-  <code>data/standard_metrics_c49.csv</code>, <code>data/standard_metrics_summary.csv</code>.</li>
+  <code>data/standard_metrics_c49.csv</code>, <code>data/standard_metrics_summary.csv</code>, <code>data/metric_val_images.csv</code>,
+  <code>data/metric_val_tests.csv</code>, <code>data/metric_val_vqa.csv</code>, <code>data/metric_val_genre.csv</code>.</li>
 <li><strong>Run notes:</strong> <code>docs/RENDERS_2026-10-05_standard_metrics.md</code>.</li>
 </ul>
 </section>
@@ -2637,7 +3026,7 @@ analysis:
 </ul>
 </section>
 <section id="p-30-the-text-encoder">
-<p class="status"><span class="pill" style="--c:#0ca30c">Holds</span><span class="corpus">1649 renders · 70 prompts · 8 seeds · pre-registered · 2026-10-13</span></p>
+<p class="status"><span class="pill" style="--c:#0ca30c">Holds</span><span class="corpus">1917 renders · 74 prompts · 8 seeds · pre-registered · 2026-10-18</span></p>
 <h1 id="p-30-the-text-encoder--the-text-encoder-how-hard-it-pushes-and-where-the-picture-goes">The text encoder — how hard it pushes, and where the picture goes</h1>
 <blockquote>
 <p><strong>The direction I'm chasing.</strong> Krea-2 reads the prompt with a language model, Qwen3-VL-4B, before
@@ -2654,7 +3043,11 @@ vary from token to token, and each real edit has a direction of its own: one pro
 drives it to anime. Why a given edit points where it does is still open. And a dose ladder showed that the
 full-strength edits do not break the picture: the style holds up to about d = 0.70, and before it moves, the
 edit has often already changed <em>who</em> is drawn. Blind labels by two people confirm it: two of the edits
-cost the character far more than random pushes of the same size, and turn dark skin lighter.</p>
+cost the character far more than random pushes of the same size, and turn dark skin lighter.
+Since then I've looked inside: one layer, L06, writes almost all of the encoder's internal signal; the damage does
+not travel through the readings right after the edited layer, and the two halves of the readings together fall
+short of the full edit. Switching off half of the very first layer makes the picture <em>write</em> the prompt. And on the
+prompt itself, the separators make no difference, while BREAK breaks the scene.</p>
 </blockquote>
 <h2 id="p-30-the-text-encoder--in-two-minutes">In two minutes</h2>
 <p>Before the image model draws, a language model reads the prompt and hands over a long list of
@@ -2696,6 +3089,27 @@ time; under random pushes it almost never changes. The prompts never name a skin
 the character, and the model fills the gap with its default.</p>
 <p><img alt="Three portraits at full dose: the original, the real edit and two random pushes of the same size; under L06 and L14 the real edit turns the elf and the half-orc into lighter-skinned generic humans while the random pushes keep them, and under L28 the real edit keeps the dwarf while the random pushes change her." src="assets/30-the-text-encoder/F30.20_te_traits_sheet.webp" /></p>
 <p><img alt="Three portraits along the dose ladder: under L06 the half-orc loses her orc features by 0.70 and becomes a photograph at 0.80; under L14 the elf rogue's skin lightens before the picture turns more cartoon; under L28 the half-orc stays a comic while her face and collar change." src="assets/30-the-text-encoder/F30.16_te_dose_sheet.webp" /></p>
+<p>Then I opened the text encoder itself. A probe that only reads, run on all 36 layers, shows one layer doing almost all
+the writing: the MLP of layer 6 takes the internal signal from about 400 to about 13,100, and every layer after it, up
+to 33, adds a few percent. And L06 doubled is the edit that turned my portraits into photographs. That is a coincidence
+worth testing, not an explanation yet.</p>
+<p>The image model doesn't read only the encoder's last layer: it takes <strong>twelve readings</strong> of every word, at layers 2, 5,
+8 and so on up to 35, and mixes them. So I asked which readings carry the damage. I let the L06 and L14 edits reach
+only some readings and kept the others at their original value. The readings right after the edited layer do
+nothing. The early and middle ones cost more traits than the late ones, in five of six cases, but by a margin just
+short of the bar I had fixed (0.146 against 0.15). And the strangest part: the two halves together don't add up to the
+full edit. Under L14 they cost less than half of what the whole edit costs; the whole edit changes the person every
+time, the halves never.</p>
+<p><img alt="The half-orc at four seeds under L06 MLP doubled: the original, the full edit (two seeds) turning her into a photograph of a generic woman, the push kept on the two readings right after the layer (unchanged), on the early and middle readings (a human woman with lighter skin, mostly still a comic) and on the late readings (a lighter, half-painted woman who keeps her ears)." src="assets/30-the-text-encoder/F30.22_te_taps_L06_halforc.webp" /></p>
+<p>Then two curiosities. Switch off half of the encoder's <strong>first</strong> layer and the image model stops drawing: it
+<em>writes</em>, filling the picture with fragments of the prompt ("realist: om wetern comips"). Switch off the whole layer
+and you get coloured noise, no text at all. Measured on the encoder side, half a layer keeps the words recognisable at
+a normal size; the whole layer gone loses both.</p>
+<p><img alt="Four prompts at one seed with layer 0 of the text encoder switched off: attention off fills the picture with fragments of the prompt as text, MLP off writes clean text for the elf and text over a face for the watercolour dwarf, the whole layer off gives tiled coloured noise every time." src="assets/30-the-text-encoder/F30.21_te_layer0_text.webp" /></p>
+<p>And people asked me about punctuation. On two complex prompts with four characters each, commas, periods,
+semicolons, no punctuation at all, or no "Character 1 (…)" labels: no difference, within a quarter of an error. BREAK,
+the old trick from CLIP-based models to stop concepts bleeding, does the opposite here: it breaks the scene in 16 of 16
+pairs.</p>
 <h2 id="p-30-the-text-encoder--the-verdict">The verdict</h2>
 <p><strong>Holds</strong>, pre-registered twice: the size of the push on the conditioning predicts how much the
 picture changes (Spearman 0.71 and 0.80), mostly between kinds of edit; within the edits that change
@@ -2714,7 +3128,11 @@ full-dose picture, and the style changes before coherence breaks, which it never
 gradual, by the rule fixed in advance; *but only pooled: L14 slides, L06 jumps. <strong>Holds</strong> (C75): the first cost of L06 and L14 is the character,
 before the style; the cost depends on the edit's direction, not its size (random pushes of the same size keep the
 character, and L28 keeps it better than they do); under L06 and L14 dark skin turns lighter. <strong>Ambiguous</strong> (C75):
-that L28 costs traits without changing style.</p>
+that L28 costs traits without changing style. <strong>Holds</strong> (C78): separators make no difference on complex prompts;
+BREAK breaks the scene. <strong>Open</strong> (C77): half of layer 0 switched off makes the picture write the prompt (4 of 6, bar 5).
+<strong>Open</strong>, described: L06's MLP writes almost all of the encoder's internal signal. <strong>Holds</strong> (C79): the damage does not
+travel through the readings right after the edited layer. <strong>Ambiguous</strong> (C79): that it travels through the early and
+middle readings rather than the late ones (+0.146 against a bar of +0.15).</p>
 <h2 id="p-30-the-text-encoder--why-i-might-be-wrong">Why I might be wrong</h2>
 <p><strong>One observer, not blind.</strong> Every genre and intensity label is mine. On the order grids I saw the edit
 names, and I had seen these pictures before. I gave the intensity labels after I knew the first test had
@@ -2745,6 +3163,11 @@ is kept as downloaded and changes no verdict.</p>
 <p><strong>What the measures do not see.</strong> The conditioning is what the image model receives, not what it does
 with it. Attention says where a phrase is read, not what it says. C71 averages over all the tokens of a
 prompt, which can hide an effect concentrated on a few words.</p>
+<p><strong>The newest results are thin.</strong> C77 is one seed, four prompts and my own reading of the pictures. C78 rests on two
+prompts that I wrote, and most questions sit near the ceiling, so a small effect of punctuation cannot be excluded.
+In C79 I labelled alone, and contact sheets showing the conditions existed before I labelled: my perfect agreement
+with myself on repeats (kappa 1.00) says I was consistent, not that I was not influenced. The probe of the 36 layers
+is a description: no prediction was fixed before it.</p>
 <p><strong>The intensity scale mixed two things.</strong> On L28 MLP doubled, all five pictures are labelled Western
 comic but intensity 3, "entirely another genre". Opened next to the original, they stay comics with a
 very different rendering. In practice intensity measured the overall change of style.</p>
@@ -2806,6 +3229,11 @@ removing: strong changes in 40 of 70 against 4 of 70. Surface damage is rare (me
 140). My notes describe genres more often than noise: anime, chibi, a 1990s cartoon, children's
 illustration. C65 confirmed the quality side on seven characters: BRISQUE improves slightly (-1.52)
 where the DiT preset of page 28 costs +8.09.</p>
+<p>This agrees with what others found on Stable Diffusion: a targeted edit of one MLP matrix of the CLIP text encoder
+changes what the model draws with image quality (FID) nearly unchanged, while the same kind of update made in the
+image model's cross-attention sometimes leaves the pictures incoherent (<a href="README.md#related-work">README, ref. 30</a>).
+Their edits are aimed at one concept and built not to disturb the rest; mine scale a whole layer, and still cost
+little surface. Neither study compares the two halves at the same size of change: that is roadmap item C86.</p>
 <h3 id="p-30-the-text-encoder--no-common-direction-across-characters">No common direction across characters</h3>
 <p>C65 applied 20 edits chosen from the pilot to seven fantasy characters at two seeds. A DiT preset moves them
 the same way (page 28); these edits do not. Only 4 of 20 were coherent across characters (the bar was
@@ -3111,6 +3539,264 @@ random pushes of its size, as it kept the comic in C72. So the cost is a propert
 real edits, skin changes go lighter in 14 of 14; random pushes change the skin in 6 of 108 pictures. The unedited
 model never draws five asked traits at any of eight seeds (the dwarf's scars, the half-orc's tusks, dirt and snarl);
 leaving them out changes no verdict. The two labellers disagree most on whether the dwarf "reads as a dwarf" (8 of 14).</p>
+<h3 id="p-30-the-text-encoder--layer-0-switched-off">Layer 0 switched off</h3>
+<p>C77 replicated a page of the C64 pilot notes: with the MLP of layer 0 switched off, the elf came out as text. I
+switched off the attention or the MLP of layer 0 on three new prompts at the same seed, after re-rendering the C64 elf
+(pixel-identical). The rule, fixed before the renders, asked for readable text in at least 5 of 6 pictures: it got 4.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>prompt (seed 1618033)</th>
+<th>attention off</th>
+<th>MLP off</th>
+<th>whole layer off (exploratory)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>elf, comic (C64)</td>
+<td>text</td>
+<td>text</td>
+<td>noise</td>
+</tr>
+<tr>
+<td>dwarf, comic</td>
+<td>text</td>
+<td>tiled pattern</td>
+<td>noise</td>
+</tr>
+<tr>
+<td>dragonborn, comic</td>
+<td>text</td>
+<td>tiled pattern</td>
+<td>noise</td>
+</tr>
+<tr>
+<td>dwarf, watercolour</td>
+<td>text</td>
+<td>text over a face</td>
+<td>noise</td>
+</tr>
+</tbody>
+</table></div>
+<p>On the encoder side (<code>data/te_layer0_encoder_summary.csv</code>), with half the layer off the conditioning keeps a normal
+size (0.98x and 0.84x on average over the twelve readings) and the identity of each token (a logit lens recovers it in
+52 % and 62 % of positions, 51 % unedited). With the whole layer off its size is 21.7x on average, 62x at L05, and no
+token is recovered. My reading, not tested: the picture writes the prompt when the conditioning keeps the words at a
+normal size but has lost part of what layer 0 adds to them. No experiment varies the two separately.</p>
+<p>There is a precedent on a different encoder. In Stable Diffusion 1.x, causal tracing places the CLIP text encoder's
+knowledge of styles, objects and facts in its first self-attention layer, at the last token of the subject, and a
+closed-form edit of that layer removes a concept (<a href="README.md#related-work">README, ref. 31</a>). The same authors found
+that this localisation does not carry over to SD-XL or DeepFloyd (<a href="README.md#related-work">ref. 20</a>). Here, switching
+off the attention of Qwen3-VL's first layer is the condition that writes text in 4 of 4 prompts. Whether this is the
+same property of first layers, on a 4-billion-parameter language model instead of CLIP, is not tested.</p>
+<h3 id="p-30-the-text-encoder--punctuation-break-and-labels">Punctuation, BREAK and labels</h3>
+<p>C78 asked whether the separators between the parts of a prompt matter, on two prompts with four characters each
+(a prison break and a totem), eight seeds, seven versions. Before the pilot I fixed twelve yes/no questions per prompt;
+I answered them blind to version and seed (<code>data/te_punct_alessandro.csv</code>, 2,640 answers, repeats kappa 0.954).</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>version</th>
+<th>errors per picture</th>
+<th>against the original</th>
+<th>better / worse / tied (16 pairs)</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>original</td>
+<td>1.50</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>commas</td>
+<td>1.44</td>
+<td>-0.06</td>
+<td>5 / 4 / 7</td>
+<td>no difference</td>
+</tr>
+<tr>
+<td>periods</td>
+<td>1.31</td>
+<td>-0.19</td>
+<td>4 / 1 / 11</td>
+<td>no difference</td>
+</tr>
+<tr>
+<td>semicolons</td>
+<td>1.31</td>
+<td>-0.19</td>
+<td>6 / 3 / 7</td>
+<td>no difference</td>
+</tr>
+<tr>
+<td>no punctuation</td>
+<td>1.75</td>
+<td>+0.25</td>
+<td>2 / 6 / 8</td>
+<td>no difference</td>
+</tr>
+<tr>
+<td>no "Character N" labels</td>
+<td>1.69</td>
+<td>+0.19</td>
+<td>1 / 3 / 12</td>
+<td>no difference</td>
+</tr>
+<tr>
+<td>BREAK</td>
+<td>7.00</td>
+<td><strong>+5.50</strong></td>
+<td>0 / <strong>16</strong> / 0</td>
+<td><strong>worse</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>With BREAK no picture has all four characters, and the catfolk is never humanoid. The errors left in the other
+versions are omissions the model makes in every version (the elf's blue sparks: 0 of 8 everywhere). Questions chosen
+after the pilot, which decide nothing, show one more thing: without the labels two leaks between characters disappear
+(the orc's green on the elf's fist, the orc's folded arms on the tiefling), but the totem's catfolk becomes an
+ordinary cat in 7 of 8. On the encoder side, the separator changes how alike the tokens of one part are by less than
+0.001 (<code>data/te_punct_encoder_summary.csv</code>).</p>
+<h3 id="p-30-the-text-encoder--inside-the-text-encoder">Inside the text encoder</h3>
+<p>A probe that only reads (no picture), on 16 prompts, measures how much each of the 36 layers writes into the
+encoder's internal signal, relative to the size of the signal it receives (<code>data/te_residual_probe_summary.csv</code>).</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>layers</th>
+<th>size of the signal after the layer</th>
+<th>what the layer writes, relative to what it receives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>12.6 → 106.9</td>
+<td>8.5</td>
+</tr>
+<tr>
+<td>1-5</td>
+<td>186 → 398</td>
+<td>0.47-1.23</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>398 → 13,107</strong></td>
+<td><strong>33.8</strong> (almost all of it from the MLP)</td>
+</tr>
+<tr>
+<td>7-33</td>
+<td>13,108 → 14,136</td>
+<td>0.012-0.080</td>
+</tr>
+<tr>
+<td>34-35</td>
+<td>12,768, then 6,606</td>
+<td>0.24, 0.65</td>
+</tr>
+</tbody>
+</table></div>
+<p>Described, not tested. L06 doubled is the edit that turned the portraits into realistic renders (11 of 14 in C73) and
+jumped from comic to photograph in the dose ladder (C74). Whether it is
+destructive <em>because</em> it writes so much is the next question on the roadmap.</p>
+<h3 id="p-30-the-text-encoder--which-taps-carry-the-damage">Which taps carry the damage</h3>
+<p>The image model reads twelve <strong>taps</strong> of the text encoder: the internal signal entering layers 2, 5, 8, …, 35
+(<code>txtfusion</code> normalises them and mixes them before the image model sees them). An edit to layer 6 changes taps 2-11;
+an edit to layer 14 changes taps 5-11; L28, the edit that keeps the comic and the character, changes only taps 9-11.
+So: does the damage of L06 and L14 travel through the early and middle taps (0-8), or through the late ones (9-11),
+where L28 is harmless?</p>
+<p>C79 computed the edit's push on the conditioning and let it through only on some taps: the next two (L06) or the
+next one (L14), the early and middle ones, the late ones. Kept on all twelve, the push reproduces the full edit
+pixel for pixel; the two halves add up to it exactly. Three characters, four seeds, 72 renders, 108 showings labelled
+blind with C75's questions, one at a time (<code>data/te_tap_alessandro.csv</code>).</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>test (pre-registered)</th>
+<th>value</th>
+<th>rule</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 — early and middle taps cost more traits than late ones</td>
+<td>0.212 against 0.066, +0.146; 5 of 6 pairs</td>
+<td>≥ +0.15 and 5 of 6</td>
+<td>inconclusive</td>
+</tr>
+<tr>
+<td>2 — the taps right after the layer are enough, L06</td>
+<td>0.014 / 0.296 = 0.05</td>
+<td>≥ 0.70 enough, ≤ 0.30 not</td>
+<td>not enough</td>
+</tr>
+<tr>
+<td>2 — the same, L14 (one tap)</td>
+<td>0.000 / 0.128 = 0.00</td>
+<td>same</td>
+<td>not enough</td>
+</tr>
+<tr>
+<td>3 — automatic distances agree (DINOv2 / CSD)</td>
+<td>15 of 24 / 3 of 24 cells</td>
+<td>≥ 18 of 24</td>
+<td>no / opposite</td>
+</tr>
+<tr>
+<td>reliability on repeats</td>
+<td>kappa 1.00</td>
+<td>≥ 0.60</td>
+<td>passed</td>
+</tr>
+</tbody>
+</table></div>
+<p>Trait loss on the two seeds where the full edit exists:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>edit</th>
+<th>next taps</th>
+<th>early and middle</th>
+<th>late</th>
+<th>the two halves summed</th>
+<th>full edit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L06</td>
+<td>0.01</td>
+<td>0.31</td>
+<td>0.07</td>
+<td>0.37</td>
+<td>0.46</td>
+</tr>
+<tr>
+<td>L14</td>
+<td>0.00</td>
+<td>0.12</td>
+<td>0.03</td>
+<td>0.16</td>
+<td>0.38</td>
+</tr>
+</tbody>
+</table></div>
+<p><img alt="The half-orc at four seeds under L14 MLP doubled: the full edit (two seeds) turns her into a light-skinned human with brown braids; with the push on one tap, on the early and middle taps or on the late taps she stays a half-orc, with small changes to her hair and a tusk." src="assets/30-the-text-encoder/F30.23_te_taps_L14_halforc.webp" /></p>
+<p>Reported, not tested: under L14 the full edit lightens the skin in 4 of 6 pictures and changes the person in 6 of 6,
+the half-tap pictures in 0 of 24. Under L06 the early and middle taps lighten it in 6 of 12 and change the person in
+6 of 12, the late ones in 4 of 12 and 1 of 12. By CSD the late taps move the pictures more (21 of 24 cells); under L06,
+DINOv2 and VQAScore move more with the early ones: a hint that the late taps carry rendering and the early ones
+content, from a measure (CSD) that C66 did not validate for style.</p>
+<p>Diffusion Lens, which renders images from the intermediate layers of text encoders, finds simple and common concepts
+early and relations, colour bindings and rare concepts late, built gradually in a T5 encoder
+(<a href="README.md#related-work">README, ref. 21</a>). The C79 result, damage that needs many readings at once and halves that
+fall short of the whole, fits a gradual build-up better than a single locus. C87 tests it tap by tap.</p>
 <h3 id="p-30-the-text-encoder--reproducing-this">Reproducing this</h3>
 <pre><code class="language-yaml">model:
   checkpoint: krea2_turbo_bf16.safetensors
@@ -3130,7 +3816,7 @@ tuner:
   version: not recorded — the tuner is a separate repository
   mode: Real Value; one layer half through granular_json (layers.L.self_attn.{q,k,v,o}_proj.weight or layers.L.mlp.{gate,up,down}_proj.weight), weight x (1 + d)
 prompts:
-  files: [data/te_pilot_plan.csv, data/te_characters_plan.csv, data/te_bridge_plan.csv, data/te_default_plan.csv, data/te_fallback_plan.csv, data/te_dose_plan.csv, data/te_traits_plan.csv]
+  files: [data/te_pilot_plan.csv, data/te_characters_plan.csv, data/te_bridge_plan.csv, data/te_default_plan.csv, data/te_fallback_plan.csv, data/te_dose_plan.csv, data/te_traits_plan.csv, data/te_layer0_plan.csv, data/te_punct_plan.csv, data/te_punct2_plan.csv, data/te_punct_nopunct_plan.csv, data/te_tap_isolation_plan.csv]
   ids: [P1_elfbrawler, V1_Original, V2_SubjectFirst, V3_BGFirst, V4_ActionFirst, V5_Inverse, D1_dwarf_paladin, D1W_dwarf_paladin_watercolor, E2_elf_rogue, G5_gnome_wizard, H3_halfling_druid, O4_halforc_fighter, R6_dragonborn_cleric, T7_tiefling_bard, &quot;V1-V5 without the style clauses (C72)&quot;, EMPTY, W00-W42 (C72 single phrases), &quot;the seven portraits without 'Western comics style' (C73)&quot;]
 seeds: [1618033, 1234567, 2645751, 3141592, 3316624, 2718281, 3605551, 4123105]
 conditions:
@@ -3140,36 +3826,43 @@ conditions:
   - name: C74 dose ladder, MLP of L06, L14, L28 at d = 0.10, 0.25, 0.40, 0.50, 0.60, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.00
     dose: 0.10-1.00
     measured_D: not measured; the dose is a per-matrix gain, not a calibrated displacement
+  - name: C77 layer 0 attention, MLP or all seven matrices x 0
+    dose: -1.00
+    measured_D: not measured
+  - name: C79 push of L06 or L14 MLP doubled, restricted to taps (2,3 or 4,5), 0-8 or 9-11 (Krea2ConditioningPush, variant taps)
+    dose: 1.000
+    measured_D: per-tap push norms in data/te_tap_isolation_encoder_by_tap.csv
 outputs:
-  folders: [benchmark_te_pilot, benchmark_te_characters, benchmark_te_bridge, benchmark_te_default, benchmark_te_fallback, benchmark_te_dose, benchmark_te_traits]
-  manifests: [data/te_pilot_plan.csv, data/te_characters_plan.csv, data/te_bridge_plan.csv, data/te_default_plan.csv, data/te_fallback_plan.csv, data/te_dose_plan.csv, data/te_traits_plan.csv]
+  folders: [benchmark_te_pilot, benchmark_te_characters, benchmark_te_bridge, benchmark_te_default, benchmark_te_fallback, benchmark_te_dose, benchmark_te_traits, benchmark_te_layer0, benchmark_te_layer0_block, benchmark_te_punct, benchmark_te_tap_isolation]
+  manifests: [data/te_pilot_plan.csv, data/te_characters_plan.csv, data/te_bridge_plan.csv, data/te_default_plan.csv, data/te_fallback_plan.csv, data/te_dose_plan.csv, data/te_traits_plan.csv, data/te_layer0_plan.csv, data/te_punct_plan.csv, data/te_punct2_plan.csv, data/te_punct_nopunct_plan.csv, data/te_tap_isolation_plan.csv]
   encodes_without_images: [benchmark_te_conditioning (C67, 721), benchmark_te_regions (C68, 241), benchmark_te_direction (C71, 16)]
 analysis:
-  scripts: [experiments/te_pilot_phase1_tally.py, experiments/te_characters.py, experiments/te_conditioning.py, experiments/te_regions.py, experiments/te_bridge.py, experiments/te_genre_tally.py, experiments/te_genre_dose_tally.py, experiments/te_direction.py, experiments/te_size_within_type.py, experiments/te_default.py, experiments/te_default_tally.py, experiments/te_fallback.py, experiments/te_fallback_tally.py, experiments/te_dose.py, experiments/te_dose_tally.py, experiments/te_traits.py, experiments/te_traits_page.py, experiments/te_traits_tally.py, experiments/te_traits_explore.py, experiments/te_traits_explore_B2.py]
-  produces: data/te_conditioning_tests.csv, data/te_regions_tests.csv, data/te_bridge_readings.csv, data/te_bridge_style.csv, data/te_genre_tests.csv, data/te_genre_dose_tests.csv, data/te_direction_tests.csv, data/te_dose_tests.csv, data/te_traits_tests.csv, data/te_traits_B2_tests.csv
+  scripts: [experiments/te_pilot_phase1_tally.py, experiments/te_characters.py, experiments/te_conditioning.py, experiments/te_regions.py, experiments/te_bridge.py, experiments/te_genre_tally.py, experiments/te_genre_dose_tally.py, experiments/te_direction.py, experiments/te_size_within_type.py, experiments/te_default.py, experiments/te_default_tally.py, experiments/te_fallback.py, experiments/te_fallback_tally.py, experiments/te_dose.py, experiments/te_dose_tally.py, experiments/te_traits.py, experiments/te_traits_page.py, experiments/te_traits_tally.py, experiments/te_traits_explore.py, experiments/te_traits_explore_B2.py, experiments/te_layer0.py, experiments/te_layer0_block.py, experiments/te_layer0_encoder.py, experiments/te_punct.py, experiments/te_punct2.py, experiments/te_punct_page.py, experiments/te_punct_tally.py, experiments/te_punct_encoder.py, experiments/te_residual_probe.py, experiments/te_tap_isolation.py, experiments/te_tap_isolation_page.py, experiments/te_tap_isolation_tally.py]
+  produces: data/te_conditioning_tests.csv, data/te_regions_tests.csv, data/te_bridge_readings.csv, data/te_bridge_style.csv, data/te_genre_tests.csv, data/te_genre_dose_tests.csv, data/te_direction_tests.csv, data/te_dose_tests.csv, data/te_traits_tests.csv, data/te_traits_B2_tests.csv, data/te_layer0_encoder_summary.csv, data/te_punct_tests.csv, data/te_punct_encoder_summary.csv, data/te_residual_probe_summary.csv, data/te_tap_tests.csv, data/te_tap_isolation_metrics.csv
 </code></pre>
 <h2 id="p-30-the-text-encoder--provenance">Provenance</h2>
 <ul>
-<li>Renders: C64 pilot (463), C65 characters (531), C69 bridge (25), C72 defaults (280), C73 fallbacks (29), C74 dose ladder (199, gate included), C75 random pushes and plain portraits (122, gate included).</li>
-<li>Encodes without images: C67 (721), C68 (241), C71 (16).</li>
+<li>Renders: C64 pilot (463), C65 characters (531), C69 bridge (25), C72 defaults (280), C73 fallbacks (29), C74 dose ladder (199, gate included), C75 random pushes and plain portraits (122, gate included), C77 layer 0 (7, gate included), C77 whole layer off (4), C78 punctuation (181, gates and pilots included), C79 taps (76, four gates included).</li>
+<li>Encodes without images: C67 (721), C68 (241), C71 (16); the 36-layer probe (16 prompts, read only).</li>
 <li><strong>Pre-registrations:</strong> <code>docs/prereg_te_characters.md</code> (+ amendments 1-3), <code>docs/prereg_te_conditioning.md</code>
   (+ amendments 1-2), <code>docs/prereg_te_regions.md</code>, <code>docs/prereg_te_bridge.md</code>, <code>docs/prereg_te_genre.md</code>
-  (+ amendments 1-2), <code>docs/prereg_te_direction.md</code>, <code>docs/prereg_te_default.md</code> (+ amendments 1-2), <code>docs/prereg_te_fallback.md</code>, <code>docs/prereg_te_dose.md</code> (+ amendments 1-2), <code>docs/prereg_te_traits.md</code> (+ amendments 1-4); the pilot plan <code>docs/plan_te_pilot.md</code>.</li>
+  (+ amendments 1-2), <code>docs/prereg_te_direction.md</code>, <code>docs/prereg_te_default.md</code> (+ amendments 1-2), <code>docs/prereg_te_fallback.md</code>, <code>docs/prereg_te_dose.md</code> (+ amendments 1-2), <code>docs/prereg_te_traits.md</code> (+ amendments 1-4), <code>docs/prereg_te_punct.md</code> (+ amendments 1-6), <code>docs/prereg_te_tap_isolation.md</code> (+ amendment 1; not committed before the renders, file times only); C77's rule is in the docstring of <code>experiments/te_layer0.py</code>, committed before its renders; the pilot plan <code>docs/plan_te_pilot.md</code>.</li>
 <li><strong>Result documents:</strong> <code>docs/te_pilot_phase1_result.md</code>, <code>docs/te_characters_result.md</code>,
   <code>docs/te_characters_eye_result.md</code>, <code>docs/te_order_grid_result.md</code>, <code>docs/te_conditioning_result.md</code>,
   <code>docs/te_regions_result.md</code>, <code>docs/te_bridge_result.md</code>, <code>docs/te_genre_result.md</code>,
-  <code>docs/te_direction_result.md</code>, <code>docs/te_default_result.md</code>, <code>docs/te_fallback_result.md</code>, <code>docs/te_dose_result.md</code>, <code>docs/te_traits_result.md</code>.</li>
+  <code>docs/te_direction_result.md</code>, <code>docs/te_default_result.md</code>, <code>docs/te_fallback_result.md</code>, <code>docs/te_dose_result.md</code>, <code>docs/te_traits_result.md</code>, <code>docs/te_layer0_result.md</code>, <code>docs/te_punct_result.md</code>, <code>docs/te_tap_isolation_result.md</code>.</li>
 <li><strong>Data:</strong> <code>data/te_pilot_eye_alessandro_phase1.csv</code>, <code>data/te_order_grid_notes_alessandro.csv</code>,
   <code>data/te_order_tests.csv</code>, <code>data/te_size_within_type.csv</code>, <code>data/te_genre_alessandro.csv</code>, <code>data/te_genre_dose_alessandro.csv</code>,
   <code>data/te_bridge_style.csv</code>, <code>data/te_direction_by_edit.csv</code>, <code>data/te_direction_norms.csv</code>,
   <code>data/te_default_genre_alessandro.csv</code>, <code>data/te_default_cells.csv</code>, <code>data/te_default_tests.csv</code>,
   <code>data/te_words_alessandro.csv</code>, <code>data/te_massive_channels.csv</code>, <code>data/te_fallback_genre_alessandro.csv</code>,
-  <code>data/te_fallback_tests.csv</code>, <code>data/te_fallback_by_edit.csv</code>, <code>data/te_dose_alessandro.csv</code>, <code>data/te_dose_tests.csv</code>, <code>data/te_traits_questions.csv</code>, <code>data/te_traits_key_A.csv</code>, <code>data/te_traits_alessandro.csv</code>, <code>data/te_traits_by_picture.csv</code>, <code>data/te_traits_tests.csv</code>, <code>data/te_traits_explore.csv</code>, <code>data/te_traits_key_B2.csv</code>, <code>data/te_traits_B2_rater2.csv</code> (second labeller), <code>data/te_traits_B2_by_picture.csv</code>, <code>data/te_traits_B2_tests.csv</code>, <code>data/te_traits_B2_explore.csv</code>.</li>
+  <code>data/te_fallback_tests.csv</code>, <code>data/te_fallback_by_edit.csv</code>, <code>data/te_dose_alessandro.csv</code>, <code>data/te_dose_tests.csv</code>, <code>data/te_traits_questions.csv</code>, <code>data/te_traits_key_A.csv</code>, <code>data/te_traits_alessandro.csv</code>, <code>data/te_traits_by_picture.csv</code>, <code>data/te_traits_tests.csv</code>, <code>data/te_traits_explore.csv</code>, <code>data/te_traits_key_B2.csv</code>, <code>data/te_traits_B2_rater2.csv</code> (second labeller), <code>data/te_traits_B2_by_picture.csv</code>, <code>data/te_traits_B2_tests.csv</code>, <code>data/te_traits_B2_explore.csv</code>, <code>data/te_layer0_encoder_by_tap.csv</code>, <code>data/te_punct_questions.csv</code>, <code>data/te_punct_key.csv</code>, <code>data/te_punct_alessandro.csv</code>, <code>data/te_punct_by_picture.csv</code>, <code>data/te_punct_secondary.csv</code>, <code>data/te_residual_probe_by_prompt.csv</code>, <code>data/te_tap_isolation_encoder_by_tap.csv</code>, <code>data/te_tap_isolation_txtfusion_weights.csv</code>, <code>data/te_tap_key.csv</code>, <code>data/te_tap_schedule.csv</code>, <code>data/te_tap_alessandro.csv</code>, <code>data/te_tap_by_picture.csv</code>, <code>data/te_tap_isolation_cells.csv</code>.</li>
 <li><strong>Labels and keys</strong> were committed in the order the protocols require: key before labels, labels as
   downloaded before any count.</li>
 <li><strong>Probes:</strong> <code>tools/comfyui_krea2_probe</code> (conditioning), <code>tools/comfyui_krea2_attnprobe</code> (attention; reads
   only, checked pixel-identical on all 25 renders), <code>tools/comfyui_krea2_condpush</code> (random pushes; gate
-  pixel-identical).</li>
+  pixel-identical; its <code>taps</code> variant, used in C79, reproduces the full edit pixel for pixel when all twelve taps are
+  kept).</li>
 </ul>
 </section>
 </main>
