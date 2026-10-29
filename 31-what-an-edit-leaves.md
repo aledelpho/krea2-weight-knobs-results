@@ -330,7 +330,7 @@ level; the whole layer 6 leaves the fp16 range at d = 10 for the dwarf (amendmen
 
 Past the sign flip the push turns sharply: 22 single-tap clips, all at negative doses. For L06 MLP between -0.8 and
 -0.9, where its matrices are scaled by 0.2 and 0.1 and the push length jumps tenfold in one step. For the whole layer 6
-between -1.5 and -2, which is in part the attention mirror described above. Details in [`docs/te_shapes2_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_shapes2_result.md).
+between -1.5 and -2, which is in part the attention mirror described above. Details in [`docs/te_shapes2_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_shapes2_result.md).
 
 ### Deeper layers bend less
 
@@ -340,7 +340,7 @@ permutation p 0.0002. Rule 2: the edit bends less than its control in 24 of 35 l
 (6 degrees): a push added at the last edited layer reaches the only tap left with no layer in between, so it cannot
 bend, which is what the controls are for. Attention bends a little less than the MLP (median 60 against 65 degrees).
 The attention curves past -1 are the algebraic mirror: push length at d = -2 below 1e-5 at every attention layer, and
-the push at -3 equal to the push at +1. Details in [`docs/te_shapes_layers_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_shapes_layers_result.md).
+the push at -3 equal to the push at +1. Details in [`docs/te_shapes_layers_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_shapes_layers_result.md).
 
 ### Not the massive activations
 
@@ -362,7 +362,7 @@ The one cell under 0.80 also drops for the control: it moves whenever anything i
 massive entries sit on one token; putting them back keeps about all of the push (cosine 0.97 with the full push). The
 damage is in the ordinary entries, spread over the tokens. The file route is not bit-identical to the in-graph render
 (amendment 1, a 5 % tolerance; a ComfyUI update is the likely cause, not verified). Details in
-[`docs/te_massive_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_massive_result.md).
+[`docs/te_massive_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_massive_result.md).
 
 ### Equal push, unequal pictures
 
@@ -375,7 +375,7 @@ The question it was built for, whether deep edits change the three seeds in a di
 follow the network, could not be answered: the computed rule came out mixed and the blind one at -0.04, but the deep
 pictures had barely moved. My notes say so for most deep units: too little change to tell. The random push at L09
 changed the seeds as consistently as the L09 edit (blind 0.71 against 0.62). Details in
-[`docs/te_depth_control_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_depth_control_result.md).
+[`docs/te_depth_control_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_depth_control_result.md).
 
 ### Each perturbation leaves its own change
 
@@ -395,7 +395,7 @@ C104 split the blind question in two, content and style, on the same pictures (5
 
 The two real edits: content the same across seeds in all their units at both layers. Claude's reading of C103,
 content from the network and rendering from the perturbation, was not supported at either layer. Details in
-[`docs/te_depth_control2_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_depth_control2_result.md) and [`docs/te_content_style_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_content_style_result.md).
+[`docs/te_depth_control2_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_depth_control2_result.md) and [`docs/te_content_style_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_content_style_result.md).
 
 ### A family resemblance across subjects
 
@@ -415,8 +415,8 @@ Style travels less: real edits 0.19 and 0.25, random pushes 0.44 and 0.25, contr
 textures picked out, more comics, a sharper division between elements, often with one subject out of the group.
 
 On image-model presets, an earlier test found that a structured preset keeps its direction inside a style domain and
-loses it across ([`docs/prereg_domain_specificity.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_domain_specificity.md), 2026-09-25, replication pending). Text-encoder
-perturbations don't show that boundary. Details in [`docs/te_domain_transfer_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_domain_transfer_result.md).
+loses it across ([`docs/prereg_domain_specificity.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_domain_specificity.md), 2026-09-25, replication pending). Text-encoder
+perturbations don't show that boundary. Details in [`docs/te_domain_transfer_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_domain_transfer_result.md).
 
 ### Two pairs and an odd one
 
@@ -434,7 +434,7 @@ Grouped by seed: 0 of 28. Single picture found: 20 of 28 (chance 1/5); pairs cor
 of different families 6 of 9, the same preset at another sign or strength 3 of 3, a text-encoder edit against a random
 push 2 of 2, two random pushes of the same layer 4 of 7. Exploratory: the failures cluster on random pushes at layer 26
 (two trials made only of them, both failed), and every trial containing the L26 edit succeeded. Details in
-[`docs/odd_one_out_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/odd_one_out_result.md).
+[`docs/odd_one_out_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/odd_one_out_result.md).
 
 ### Where the style goes
 
@@ -451,7 +451,7 @@ human ranger, plain and under L06 MLP doubled at the four C52 seeds (40 renders,
 | female ranger | 0 | 3 | 1 | 0 |
 
 Rule 1, species: +0.00. Rule 2, gender word: +0.75. My prediction for the ranger (realistic in at least 3 of 4) failed.
-Test-retest 5 of 6. Details in [`docs/te_species_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_species_result.md).
+Test-retest 5 of 6. Details in [`docs/te_species_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_species_result.md).
 
 C108 (96 renders, gates pixel-identical) asked whether it generalises. Block A changed only the gender word of three
 other portraits; under L06 the dwarf and the half-orc are realistic in 4 of 4 with either word, the tiefling is anime in
@@ -459,7 +459,7 @@ other portraits; under L06 the dwarf and the half-orc are realistic in 4 of 4 wi
 a {non-binary | female} {elf | human}.": under L06 painting in 14 of 16, anime 1, other 1. Block C put the four C107
 descriptions into one comic page, in two orders: 16 of 16 pages keep four panels, and 0 of 32 edited panels change
 genre. Test-retest 6 of 6 and 2 of 2. The paired question ("is the change of the same kind in the four panels?") was not
-labelled. Details in [`docs/te_gender_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_gender_result.md).
+labelled. Details in [`docs/te_gender_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_gender_result.md).
 
 ### What the embeddings missed
 
@@ -527,13 +527,13 @@ analysis:
 * Renders: TEP2 (25, gate included), C102 (156), C103 (228, of which 132 calibration), C105 (416, of which 342 calibration), C107 (40, gates included), C108 (96, gates included).
   C104 and C106 made no renders: C104 relabelled C103's pictures, C106 reused C103's and the stage-5 renders.
 * Encodes without images: C93 (3,744 trajectory rows), C100 (60 trajectories), C101 (140 trajectories).
-* **Pre-registrations:** [`docs/prereg_te_shapes.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_te_shapes.md), [`docs/prereg_te_shapes2.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_te_shapes2.md) (+ amendment 1),
-  [`docs/prereg_te_shapes_layers.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_te_shapes_layers.md) (+ amendment 1), [`docs/prereg_te_massive.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_te_massive.md) (+ amendment 1),
-  [`docs/prereg_te_depth_control.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_te_depth_control.md), [`docs/prereg_te_depth_control2.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_te_depth_control2.md), [`docs/prereg_te_content_style.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_te_content_style.md),
-  [`docs/prereg_te_domain_transfer.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_te_domain_transfer.md) (+ amendments 1-2), [`docs/prereg_odd_one_out.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_odd_one_out.md), [`docs/prereg_te_species.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_te_species.md), [`docs/prereg_te_gender.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_te_gender.md).
-* **Result documents:** [`docs/te_shapes_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_shapes_result.md), [`docs/te_shapes2_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_shapes2_result.md), [`docs/te_shapes_layers_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_shapes_layers_result.md),
-  [`docs/te_massive_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_massive_result.md), [`docs/te_depth_control_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_depth_control_result.md), [`docs/te_depth_control2_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_depth_control2_result.md),
-  [`docs/te_content_style_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_content_style_result.md), [`docs/te_domain_transfer_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_domain_transfer_result.md), [`docs/odd_one_out_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/odd_one_out_result.md), [`docs/te_species_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_species_result.md), [`docs/te_gender_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/te_gender_result.md).
+* **Pre-registrations:** [`docs/prereg_te_shapes.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_te_shapes.md), [`docs/prereg_te_shapes2.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_te_shapes2.md) (+ amendment 1),
+  [`docs/prereg_te_shapes_layers.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_te_shapes_layers.md) (+ amendment 1), [`docs/prereg_te_massive.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_te_massive.md) (+ amendment 1),
+  [`docs/prereg_te_depth_control.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_te_depth_control.md), [`docs/prereg_te_depth_control2.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_te_depth_control2.md), [`docs/prereg_te_content_style.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_te_content_style.md),
+  [`docs/prereg_te_domain_transfer.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_te_domain_transfer.md) (+ amendments 1-2), [`docs/prereg_odd_one_out.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_odd_one_out.md), [`docs/prereg_te_species.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_te_species.md), [`docs/prereg_te_gender.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_te_gender.md).
+* **Result documents:** [`docs/te_shapes_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_shapes_result.md), [`docs/te_shapes2_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_shapes2_result.md), [`docs/te_shapes_layers_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_shapes_layers_result.md),
+  [`docs/te_massive_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_massive_result.md), [`docs/te_depth_control_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_depth_control_result.md), [`docs/te_depth_control2_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_depth_control2_result.md),
+  [`docs/te_content_style_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_content_style_result.md), [`docs/te_domain_transfer_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_domain_transfer_result.md), [`docs/odd_one_out_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/odd_one_out_result.md), [`docs/te_species_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_species_result.md), [`docs/te_gender_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/te_gender_result.md).
 * **Data:** `data/te_shapes_trajectories.csv`, `data/te_shapes2_trajectories.csv`,
   `data/te_shapes_layers_trajectories.csv`, `data/te_massive_metrics.csv`, `data/te_massive_encoder.csv`,
   `data/te_massive_channels.csv`, `data/te_depth_control_encoder.csv`, `data/te_depth_control_metrics.csv`,

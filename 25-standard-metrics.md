@@ -92,7 +92,7 @@ claims:
 No new renders: first, BRISQUE and CLIP-IQA (quality without a reference), CLIPScore (adherence to
 the prompt), LPIPS, DISTS and SSIM (distance from the baseline), and DINOv2 cosine (same content as
 the baseline) were computed on every image of the three confirmatory DiT benches (962 renders) —
-wording, saturation, prompt family. Second, in C66 ([`docs/prereg_metric_validation.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_metric_validation.md)), contrastively
+wording, saturation, prompt family. Second, in C66 ([`docs/prereg_metric_validation.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_metric_validation.md)), contrastively
 trained style descriptors (`CSD-ViT-L`), `DINOv2-large`, zero-shot `CLIP ViT-L/14` genre
 classification, and `VQAScore` (`clip-flant5-xl`) were tested against the pre-existing visual reading
 notes across 657 text-encoder renders (`C64`, `C65`, `C72`, `C74`, `C75`).
@@ -183,7 +183,7 @@ style features on [page 24](24-wording.md). The subject dominates; rewriting beh
 ### Calibrating metrics on text-encoder edits
 
 Before using any automatic metric to judge text-encoder experiments ([page 30](30-the-text-encoder.md)),
-C66 ([`docs/prereg_metric_validation.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_metric_validation.md), [`docs/metric_validation_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/metric_validation_result.md)) tested four candidate
+C66 ([`docs/prereg_metric_validation.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_metric_validation.md), [`docs/metric_validation_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/metric_validation_result.md)) tested four candidate
 backbones — `CSD-ViT-L` (contrastive style descriptor, `768`-d), `DINOv2-large` (`1024`-d),
 zero-shot `CLIP ViT-L/14` (`openai`), and `VQAScore` (`clip-flant5-xl`) — against the human visual
 reading tables across 657 already-rendered text-encoder images (`data/metric_val_images.csv`,
@@ -262,9 +262,9 @@ analysis:
 ## Provenance
 
 * **Renders.** benchmark_prompt_writing (401), benchmark_blk23_colorful (128), benchmark_prompt_family (433), metric_validation_te_corpus (657).
-* **Pre-registration:** [`docs/prereg_standard_metrics.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_standard_metrics.md) and [`docs/prereg_metric_validation.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/prereg_metric_validation.md), written before any of the metrics was computed on these images.
-* **Result document:** [`docs/standard_metrics_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/standard_metrics_result.md) and [`docs/metric_validation_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/metric_validation_result.md).
+* **Pre-registration:** [`docs/prereg_standard_metrics.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_standard_metrics.md) and [`docs/prereg_metric_validation.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/prereg_metric_validation.md), written before any of the metrics was computed on these images.
+* **Result document:** [`docs/standard_metrics_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/standard_metrics_result.md) and [`docs/metric_validation_result.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/metric_validation_result.md).
 * **Data:** `data/standard_metrics_c45.csv`, `data/standard_metrics_c47.csv`,
   `data/standard_metrics_c49.csv`, `data/standard_metrics_summary.csv`, `data/metric_val_images.csv`,
   `data/metric_val_tests.csv`, `data/metric_val_vqa.csv`, `data/metric_val_genre.csv`.
-* **Run notes:** [`docs/RENDERS_2026-10-05_standard_metrics.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/9466211a7353171e204fc439413f296379b011e4/docs/RENDERS_2026-10-05_standard_metrics.md).
+* **Run notes:** [`docs/RENDERS_2026-10-05_standard_metrics.md`](https://github.com/aledelpho/diffusion-models-weight-steering-report/blob/0f3279e559535d35afef9b0fda1d3051587c8402/docs/RENDERS_2026-10-05_standard_metrics.md).
